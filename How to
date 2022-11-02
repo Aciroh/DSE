@@ -3,3 +3,9 @@ How to run cmd from terminal:
 # string strCmdText;
 # strCmdText= "/C copy /b Image1.jpg + Archive.rar Image2.jpg";
 # System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+
+
+Steps:
+1.Store config in default_config.xml file
+2.Run psatsim exe from cmd/terminal(there is documentation in the psatsim folder) using a file as input (The file is the config file?)
+3.Read the output and send it back to the server.
