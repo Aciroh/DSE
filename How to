@@ -1,0 +1,5 @@
+How to run cmd from terminal:
+
+# string strCmdText;
+# strCmdText= "/C copy /b Image1.jpg + Archive.rar Image2.jpg";
+# System.Diagnostics.Process.Start("CMD.exe",strCmdText);
