@@ -27,9 +27,8 @@ namespace Server
         // Reads current folder, goes 3 folders back and enters \Resources folder where it finds Config.cfg
         private void GetConfigLocation()
         {
-            string path = Directory.GetCurrentDirectory();
-            path = Path.GetFullPath(Path.Combine(path, @"..\..\..\"));
-            path = path + @"Resources\Config.cfg";
+
+            string path = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/Resources/Config.cfg"; ;
             config.Add(Parameters.ConfigPath, path);
         }
 
