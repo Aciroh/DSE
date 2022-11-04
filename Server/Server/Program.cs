@@ -1,3 +1,16 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+using Server;
 
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        Connection con = new Connection();
+
+        Config config = new();
+        config.ReadConfig();
+        config.PrintConfig();
+    }
+}
+
+//Thread listener = new Thread(ParameterizedThreadStart);

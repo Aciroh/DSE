@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zGz4mTW2/yhZ/iN5E3/ey1SXtcGBGcACq7NL+3Nn+VOkpnNGAwHFnn1KghNWO/WOOricONqsfM4SFT7WBVfbMg==",
+  "dgSpecHash": "a7WIQoevIAYJkoQBMZsKUlecMCalslEohYvxxswEwvz0huOHPqpWON9Mgm6+old8jbrDXa7sOFQeM05YRehFbw==",
   "success": true,
-  "projectFilePath": "/Users/horatiu/Repositories/DSE/TestClient/TestClient/TestClient.csproj",
+  "projectFilePath": "H:\\Repos\\DSE\\TestClient\\TestClient\\TestClient.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
