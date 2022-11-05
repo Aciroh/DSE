@@ -4,7 +4,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        Connection connection = new Connection(1337, 1337);
+        Config config = new Config();
+        Connection connection = new Connection(config.GetPort(), config.GetPort());
 
     }
 }

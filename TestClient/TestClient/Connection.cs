@@ -31,7 +31,7 @@ namespace TestClient
 
             while (true)
             {
-                Client.Send(RequestData, RequestData.Length, new IPEndPoint(IPAddress.Broadcast, 7777));
+                Client.Send(RequestData, RequestData.Length, new IPEndPoint(IPAddress.Broadcast, broadcastPort));
                 Console.WriteLine("Sent message to: " + ServerEp.Address + " Port: " + ServerEp.Port);
                 Thread.Sleep(1000);
             }
