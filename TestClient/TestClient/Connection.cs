@@ -14,28 +14,46 @@ namespace TestClient
         {
             this.broadcastPort = broadcastPort;
             this.streamPort = streamPort;
-            StartBroadcast();
+            FindServerViaBroadcast();
         }
         int broadcastPort;
         int streamPort;
+        string serverIP;
 
-        void StartBroadcast()
+        void FindServerViaBroadcast()
         {
-
-            var Client = new UdpClient();
-            var RequestData = Encoding.ASCII.GetBytes("Are you the server?");
-            var ServerEp = new IPEndPoint(IPAddress.Any, 0);
-            Client.EnableBroadcast = true;
-            
-
-
+            var udpClient = new UdpClient();
+            var requestData = Encoding.ASCII.GetBytes("Are you the server?");
+            var serverEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            udpClient.EnableBroadcast = true;
+            udpClient.Client.ReceiveTimeout = 100;
             while (true)
             {
-                Client.Send(RequestData, RequestData.Length, new IPEndPoint(IPAddress.Broadcast, broadcastPort));
-                Console.WriteLine("Sent message to: " + ServerEp.Address + " Port: " + ServerEp.Port);
+                udpClient.Send(requestData, requestData.Length, new IPEndPoint(IPAddress.Broadcast, broadcastPort));
+                Console.WriteLine("Sent message to: " + serverEndPoint.Address + " Port: " + serverEndPoint.Port);
+                try
+                {
+                    var serverResponseData = udpClient.Receive(ref serverEndPoint);
+                    var serverResponse = Encoding.ASCII.GetString(serverResponseData);
+                    Console.WriteLine("Received " + serverResponse + " from " + serverEndPoint.Address.ToString());
+                    if (serverResponse == "Yes, this is the server.")
+                    {
+                        serverIP = serverEndPoint.Address.ToString();
+                        return;
+                    }
+                }
+                catch 
+                { 
+                
+                }
+                
                 Thread.Sleep(1000);
             }
-            
+        }
+
+        private void ConnectTCP()
+        {
+
         }
     }
 }

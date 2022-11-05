@@ -30,8 +30,8 @@ namespace Server
 
             //udpClient.BeginReceive(new AsyncCallback(ListenForBroadcast()));
             //udpClient.ExclusiveAddressUse = false; // only if you want to send/receive on same machine.
-            Thread listenThread = new Thread(ListenForBroadcast);
-            listenThread.Start();
+            Thread listenBroadcast = new Thread(ListenUDP);
+            listenBroadcast.Start();
         }
 
         internal bool CheckForRunningServers()
@@ -41,7 +41,7 @@ namespace Server
             return true;
         }
 
-        public void ListenForBroadcast()
+        public void ListenUDP()
         {
             IPEndPoint broadcastAddress = new IPEndPoint(IPAddress.Any, listenPort);
             UdpClient udpClient = new UdpClient();
@@ -53,7 +53,28 @@ namespace Server
 
                 Console.WriteLine($"Received broadcast from {broadcastAddress} :");
                 Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
+                string response = "Yes, this is the server.";
+                udpClient.Send(Encoding.ASCII.GetBytes(response), response.Length, broadcastAddress);
             }
+        }
+
+        public string GetLocalIP()
+        {
+            string ipResult = "0";
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    ipResult = ip.ToString();
+                }
+            }
+            return ipResult;
+        }
+
+        private void ListenTCP()
+        {
+            //TODO
         }
 
 
