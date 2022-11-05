@@ -43,7 +43,7 @@ namespace Server
 
         public void ListenForBroadcast()
         {
-            IPEndPoint broadcastAddress = new IPEndPoint(IPAddress.Any, 0);
+            IPEndPoint broadcastAddress = new IPEndPoint(IPAddress.Any, listenPort);
             UdpClient udpClient = new UdpClient();
             udpClient.Client.Bind(broadcastAddress);
             while (true)
