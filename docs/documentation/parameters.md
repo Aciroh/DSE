@@ -1,10 +1,10 @@
 
-{
-	"General": [
-			"Superscalar Factor": 						[1...16],
-			"N of Rename Entries": 						[1...512],
-			"N of Reorder Entries": 					[1...512],
-			"Separate Decode and Dispatch":				[true/false]
+	"General": 
+		[
+			"Superscalar Factor":				[1...16],
+			"N of Rename Entries": 				[1...512],
+			"N of Reorder Entries": 			[1...512],
+			"Separate Decode and Dispatch":		[true/false]
 		]
 	
 	"Execution": [
@@ -29,4 +29,3 @@
 			"L2 Cache Latency [Cycles]":				[0...500],
 			"% Hitrate for L2 Cache":					[0...100]
 	]
-}
