@@ -6,10 +6,8 @@ internal class Program
     {
 
         Config config = new();
-        config.ReadConfig();
-        config.PrintConfig();
 
-        //Connection con = new Connection();
+        Connection con = new Connection(config.GetPort(), config.GetPort()+1);
 
     }
 }

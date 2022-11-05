@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,18 +22,20 @@ namespace Server
             GetConfigLocation();
             config.Add(Parameters.Port, null);
             config.Add(Parameters.GenerationCount, null);
+            ReadConfig();
+            PrintConfig();
         }
         
 
-        // Reads current folder, goes 3 folders back and enters \Resources folder where it finds Config.cfg
+        // Reads current folder, goes 3 folders back and enters /Resources folder where it finds Config.cfg
         private void GetConfigLocation()
         {
-
+            // Oposite slash required for MacOS compatibility
             string path = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/Resources/Config.cfg"; ;
             config.Add(Parameters.ConfigPath, path);
         }
 
-        public void ReadConfig()
+        private void ReadConfig()
         {
             Console.WriteLine(config[Parameters.ConfigPath]);
             string[] lines = File.ReadAllLines(config[Parameters.ConfigPath]);
@@ -52,12 +55,19 @@ namespace Server
             }
         }
 
-        public void PrintConfig()
+        private void PrintConfig()
         {
-            Console.WriteLine(config[Parameters.GenerationCount]);
-            Console.WriteLine(config[Parameters.Port]);
+            Console.WriteLine();
+            foreach(var config in config)
+            {
+                Console.WriteLine(config.Key + " : " + config.Value);
+            }
         }
 
+        public int GetPort()
+        {
+            return Convert.ToInt32(config[Parameters.Port]);
+        }
         
     }
 }
