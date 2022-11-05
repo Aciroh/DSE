@@ -4,7 +4,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        Connection connection = new Connection(7777,7777);
+        Connection connection = new Connection(1337, 1337);
 
     }
 }

@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Server
 {
@@ -42,16 +43,16 @@ namespace Server
 
         public void ListenForBroadcast()
         {
-            IPEndPoint broadcastAddress = new IPEndPoint(IPAddress.Any, listenPort);
+            IPEndPoint broadcastAddress = new IPEndPoint(IPAddress.Any, 0);
             UdpClient udpClient = new UdpClient();
+            udpClient.Client.Bind(broadcastAddress);
             while (true)
             {
-                Console.WriteLine("Waiting for broadcast");
-                udpClient.Client.Bind(broadcastAddress);
+                Console.WriteLine($"Waiting for broadcast on {broadcastAddress}");
                 byte[] bytes = udpClient.Receive(ref broadcastAddress);
 
-                Console.WriteLine("Received broadcast from " + broadcastAddress + " : ");
-                Console.WriteLine(Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                Console.WriteLine($"Received broadcast from {broadcastAddress} :");
+                Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
             }
         }
 

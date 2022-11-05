@@ -21,19 +21,18 @@ namespace TestClient
 
         void StartBroadcast()
         {
-            while(true)
+
+            var Client = new UdpClient();
+            var RequestData = Encoding.ASCII.GetBytes("Are you the server?");
+            var ServerEp = new IPEndPoint(IPAddress.Any, 0);
+            Client.EnableBroadcast = true;
+            
+
+
+            while (true)
             {
-                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-                IPAddress iPAddress = IPAddress.Parse("255.255.255.255");
-
-                byte[] sendbuf = Encoding.ASCII.GetBytes("Are you the server?");
-                IPEndPoint iPEndPoint = new IPEndPoint(iPAddress, broadcastPort);
-
-                s.SendTo(sendbuf, iPEndPoint);
-
-                Console.WriteLine("Message sent");
-                
+                Client.Send(RequestData, RequestData.Length, new IPEndPoint(IPAddress.Broadcast, 7777));
+                Console.WriteLine("Sent message to: " + ServerEp.Address + " Port: " + ServerEp.Port);
                 Thread.Sleep(1000);
             }
             
