@@ -2,15 +2,15 @@
 Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Client\default_cfg.xml with 1 variations -->
 <psatsim_results>
 <variation
-	configuration="Default" variation="1"
-	started="10 November 2022, 10:02:00" runtime="0.857">
+	configuration="Config-2" variation="1"
+	started="10 November 2022, 15:28:25" runtime="1.147">
 	<psatsim>
-		<config name="Default" number="1">
+		<config name="Config-2" number="1">
 			<general
 				superscalar="4" rename="16" reorder="20"
 				rsb_architecture="distributed" rs_per_rsb="2"
 				speculative="true" speculation_accuracy="0.980"
-				separate_dispatch="true" seed="1668067320"
+				separate_dispatch="true" seed="1668086905"
 				trace="compress.tra" output="output.xml"
 				vdd="2.2" freq="600" />
 			<execution architecture="standard"
@@ -24,173 +24,173 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 		</config>
 	</psatsim>
 	<general
-		cycles="64137"
+		cycles="63960"
 		instructions="116748"
-		fetches="120258"
-		ipc="1.820291"
-		energy="0.944094"
-		power="8.83198">
+		fetches="120079"
+		ipc="1.825328"
+		energy="0.940844"
+		power="8.82593">
 		<regfile
-			total="226050"
-			utilization_avg="3.52449"
+			total="225955"
+			utilization_avg="3.53275"
 			capacitance="0.470644"
-			activity="26396.9"
-			energy="0.0601299"
-			power="0.562514"
-			power_percent="6.36906" />
+			activity="26394.9"
+			energy="0.0601252"
+			power="0.564026"
+			power_percent="6.39056" />
 		<resultbus
-			total="117111"
-			utilization_avg="1.82595"
+			total="117101"
+			utilization_avg="1.83085"
 			capacitance="0.904505"
-			activity="23980.4"
-			energy="0.104981"
-			power="0.982097"
-			power_percent="11.1198" />
+			activity="23961.2"
+			energy="0.104897"
+			power="0.984027"
+			power_percent="11.1493" />
 		<clockbus
 			capacitance="1.58642"
-			activity="64137"
-			energy="0.492462"
+			activity="63960"
+			energy="0.491103"
 			power="4.60697"
-			power_percent="52.1624" />
+			power_percent="52.1982" />
 	</general>
 	<memory>
 		<system
 			latency="1"
-			reads="21" />
+			reads="27" />
 		<l2
 			hit_chance="99.00"
 			latency="3"
-			reads="2572"
-			misses="21"
-			miss_rate="0.82"
+			reads="2462"
+			misses="27"
+			miss_rate="1.10"
 			capacitance="2.592"
-			activity="8711.4"
-			energy="0.109287"
-			power="1.02238"
-			power_percent="11.5759" />
+			activity="8593.8"
+			energy="0.107812"
+			power="1.01137"
+			power_percent="11.459" />
 		<l1_code
 			hit_chance="99.00"
 			latency="1"
-			reads="120259"
-			misses="1227"
-			miss_rate="1.02"
+			reads="120080"
+			misses="1164"
+			miss_rate="0.97"
 			capacitance="0.192"
-			activity="41154.6"
-			energy="0.0382441"
-			power="0.357773"
-			power_percent="4.05088" />
+			activity="41060.4"
+			energy="0.0381566"
+			power="0.357942"
+			power_percent="4.05557" />
 		<l1_data
 			hit_chance="97.00"
 			latency="1"
-			reads="43208"
-			misses="1345"
-			miss_rate="3.11"
+			reads="43190"
+			misses="1298"
+			miss_rate="3.01"
 			capacitance="0.192"
-			activity="25857.3"
-			energy="0.0240287"
-			power="0.224788"
-			power_percent="2.54516" />
+			activity="25831.5"
+			energy="0.0240047"
+			power="0.225185"
+			power_percent="2.5514" />
 	</memory>
 
 	<fetch
-		total="155910"
-		utilization_avg="2.43089"
+		total="155795"
+		utilization_avg="2.43582"
 		capacitance="0"
-		activity="41493.5"
+		activity="41449.9"
 		energy="0"
 		power="0"
 		power_percent="0" />
 	<decode
-		total="201866"
-		utilization_avg="3.14742"
+		total="202067"
+		utilization_avg="3.15927"
 		capacitance="0.00267162"
-		activity="51833.6"
-		energy="0.000670242"
-		power="0.0062701"
-		power_percent="0.0709931" />
+		activity="51861.1"
+		energy="0.000670598"
+		power="0.00629079"
+		power_percent="0.0712762" />
 	<dispatch
-		total="230236"
-		utilization_avg="3.58975"
+		total="230545"
+		utilization_avg="3.60452"
 		capacitance="0.00226466"
-		activity="58216.8"
-		energy="0.000638113"
-		power="0.00596953"
-		power_percent="0.0675899" />
+		activity="58268.6"
+		energy="0.000638681"
+		power="0.00599138"
+		power_percent="0.0678838" />
 	<rename
-		total="301556"
-		utilization_avg="4.70175"
+		total="301620"
+		utilization_avg="4.71576"
 		capacitance="0.0508497"
-		activity="64137"
-		energy="0.0157849"
+		activity="63960"
+		energy="0.0157414"
 		power="0.147668"
-		power_percent="1.67196" />
+		power_percent="1.67311" />
 	<rsb
-		total="279061"
+		total="279134"
 		number="6"
-		cycles_utilization_avg="46510.2"
-		cycles_utilization_stddev="44947.7"
-		utilization_avg="4.35101"
-		utilization_stddev="4.03327"
-		energy="0.00130879"
+		cycles_utilization_avg="46522.3"
+		cycles_utilization_stddev="44942.3"
+		utilization_avg="4.3642"
+		utilization_stddev="4.04544"
+		energy="0.00130518"
 		power="0.0122437"
-		power_percent="0.138629" />
+		power_percent="0.138724" />
 	<exec
-		total="127887"
+		total="127790"
 		number="6"
-		cycles_utilization_avg="21314.5"
-		cycles_utilization_stddev="20242.8"
-		utilization_avg="1.99397"
-		utilization_stddev="1.84739"
-		energy="0.160409"
-		power="1.50062"
-		power_percent="16.9907" />
+		cycles_utilization_avg="21298.3"
+		cycles_utilization_stddev="20213.4"
+		utilization_avg="1.99797"
+		utilization_stddev="1.85106"
+		energy="0.16043"
+		power="1.50497"
+		power_percent="17.0517" />
 	<reorder
-		total="464152"
-		utilization_avg="7.23688"
+		total="464273"
+		utilization_avg="7.2588"
 		utilization_max="13"
 		energy="0.326206"
-		power="64137"
-		power_percent="0.101262" />
+		power="63960"
+		power_percent="0.100982" />
 	<commit
 		total="116748"
-		utilization_avg="1.82029"
+		utilization_avg="1.82533"
 		energy="0"
-		power="32682"
+		power="32664.3"
 		power_percent="0" />
 	<core>
 		<rs
-			utilization="61125"
+			utilization="61162"
 			capacitance="0.00158965"
-			activity="32068.5"
-			energy="0.000246731"
+			activity="31980"
+			energy="0.000246051"
 			power="0.00230817"
-			power_percent="0.0261342">
+			power_percent="0.0261521">
 			<eu name="Integer"
-				utilization="30048"
-				energy="9.41663e-005"
-				power="0.880923"
-				power_percent="0.00997425">
+				utilization="30043"
+				energy="9.41467e-005"
+				power="0.883177"
+				power_percent="0.0100066">
 		</rs>
 		<rs
-			utilization="44500"
+			utilization="44541"
 			capacitance="0.00158965"
-			activity="32068.5"
-			energy="0.000246731"
+			activity="31980"
+			energy="0.000246051"
 			power="0.00230817"
-			power_percent="0.0261342">
+			power_percent="0.0261521">
 			<eu name="Integer"
-				utilization="21448"
-				energy="6.62422e-005"
-				power="0.619694"
-				power_percent="0.00701648">
+				utilization="21446"
+				energy="6.62832e-005"
+				power="0.621793"
+				power_percent="0.00704507">
 		</rs>
 		<rs
 			utilization="0"
 			capacitance="0.00158965"
-			activity="32068.5"
-			energy="0.000246731"
+			activity="31980"
+			energy="0.000246051"
 			power="0.00230817"
-			power_percent="0.0261342">
+			power_percent="0.0261521">
 			<eu name="Floating"
 				utilization="0"
 				energy="0"
@@ -200,10 +200,10 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 		<rs
 			utilization="0"
 			capacitance="0.00158965"
-			activity="32068.5"
-			energy="0.000246731"
+			activity="31980"
+			energy="0.000246051"
 			power="0.00230817"
-			power_percent="0.0261342">
+			power_percent="0.0261521">
 			<eu name="Floating"
 				utilization="0"
 				energy="0"
@@ -211,12 +211,12 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 				power_percent="0">
 		</rs>
 		<rs
-			utilization="52629"
+			utilization="52648"
 			capacitance="0.00103685"
-			activity="32068.5"
-			energy="0.000160931"
+			activity="31980"
+			energy="0.000160487"
 			power="0.00150551"
-			power_percent="0.0170461">
+			power_percent="0.0170578">
 			<eu name="Branch"
 				utilization="22479"
 				energy="0"
@@ -224,14 +224,14 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 				power_percent="0">
 		</rs>
 		<rs
-			utilization="120807"
+			utilization="120783"
 			capacitance="0.00103685"
-			activity="32068.5"
-			energy="0.000160931"
+			activity="31980"
+			energy="0.000160487"
 			power="0.00150551"
-			power_percent="0.0170461">
+			power_percent="0.0170578">
 			<eu name="Memory"
-				utilization="53912"
+				utilization="53822"
 				energy="0"
 				power="0"
 				power_percent="0">

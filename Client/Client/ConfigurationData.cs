@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    internal class Data
+    internal class ConfigurationData
     {
         //Execution
+
+        public String configurationName { get; set; }
         public int superscalarFactor { get; set; } = 1; 
         public int numberOfRenameEntities { get; set; } = 1;
         public int ReorderEntries { get; set; } = 1;
