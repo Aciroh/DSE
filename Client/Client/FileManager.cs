@@ -4,26 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Client
 {
     internal class FileManager
     {
         private String path;
+        XmlDocument xmlDocument = new XmlDocument();
 
         public FileManager(string path)
         {
             this.path = path;
+            xmlDocument.Load(path);
         }
 
-        public void UpdateAttribute(String newValue)
+        public void PrintNodeAttribute(String targetNode, int attributeIndex)
         {
-            XmlDocument xmlDocument = new XmlDocument();
+            
+            String nodePath = "psatsim/" + targetNode;
+            XmlNode node = xmlDocument.SelectSingleNode(nodePath);
 
-            xmlDocument.Load(path);
+            //XmlNodeList nodeAttribute = xmlDocument.GetElementsByTagName(targetNode);
+            String nodeAttribute = node.Attributes[attributeIndex].InnerText;
+            Console.WriteLine(nodeAttribute);
+        }
 
-            XmlNode node = xmlDocument.SelectSingleNode("psatsim/config");
-            node.Attributes[0].Value = newValue;
+        public void UpdateAttribute(int attributeIndex, String newValue, String targetNode)
+        {
+            String nodePath = "psatsim/" + targetNode;
+            Console.WriteLine(nodePath);
+
+            XmlNode node = xmlDocument.SelectSingleNode(nodePath);
+   
+            node.Attributes[attributeIndex].Value = newValue;
 
             xmlDocument.Save(path);
         }

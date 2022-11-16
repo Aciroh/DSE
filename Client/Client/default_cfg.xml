@@ -1,53 +1,9 @@
 <psatsim>
-  <config name="Config-2">
-    <!--
-		<general
-			superscalar="\d+"
-			rename="\d+"
-			reorder"\d+"
-			
-			#-These are used for non-custom architectures
-			rsb_architecture="centralized|hybrid|distributed"
-			rs_per_rsb="\d+"
-			
-			#-Optional: separate the decode and dispatch staged
-			#	True is the default, false indicates that the
-			#	decode and dispatch stages will be combined
-			separate_dispatch="false|true"
-			
-			#-Optional: seed for the random number generator
-			#	Defaults to the load time of the simulator
-			seed="\d+"
-			
-			trace="..."
-			output="..."
-			
-			vdd="<floating>" (~1.8-3.3 type range)
-			freq="<floating>"
-			/> -->
-    <!--
-		Vdd and Frequency values used by Wattch (all 350 nm):
-			Processor		Vdd		MHz
-			Alpha 21264		2.2		600
-			Pentium Pro		3.3		200
-			MIPS R10000		3.3		200
-		-->
-    <general superscalar="4" rename="16" reorder="20" rsb_architecture="distributed" rs_per_rsb="2" speculative="true" speculation_accuracy="0.980" separate_dispatch="true" seed="0" trace="compress.tra" output="output.xml" vdd="2.2" frequency="600" />
-    <!-- This is the structure for the standard system architecture 
-		<execution
-			# This specifies the type of execution architecture
-			architecture="standard"
-			# This specifies the number of integer EUs
-			integer="2"
-			# This specifies the number of floating EUs
-			floating="2"
-			# This specifies the number of branching EUs
-			branch="2"
-			# This specifies the number of memory EUs
-			memory="2"
-			/>	-->
+  <config name="Config-7">
+    <general superscalar="6" rename="18" reorder="20" rsb_architecture="distributed" rs_per_rsb="2" speculative="true" speculation_accuracy="0.980" separate_dispatch="true" seed="0" trace="compress.tra" output="output.xml" vdd="2.3" frequency="600" />
     <execution architecture="standard" integer="2" floating="2" branch="1" memory="1" />
     <!-- This is the structure for the simple system architecture
+	
 		<execution
 			# This specifies the type of execution architecture
 			architecture="simple"
