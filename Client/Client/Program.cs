@@ -52,7 +52,9 @@ internal class Program
         configFileManager.UpdateAttribute(1, configurationData.latencyl2, configurationData.memoryL2);
         configFileManager.UpdateAttribute(0, configurationData.latency, configurationData.system);
 
+        //Directory.SetCurrentDirectory(@"C:\Program Files (x86)\PSATSim");
         Directory.SetCurrentDirectory(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/Tools/PSATSim");
+
 
         ProcessStartInfo processStartInfo = new ProcessStartInfo();
         processStartInfo.FileName = "psatsim_con.exe";
