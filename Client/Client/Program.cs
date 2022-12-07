@@ -3,13 +3,18 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using TestClient;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        String outputPath = "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Client\\Client\\output.xml";
-        String configPath = "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Client\\Client\\default_cfg.xml";
+
+        Config config = new Config();
+        Connection connection = new Connection(config.GetPort(), config.GetPort());
+
+        String outputPath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/output.xml";
+        String configPath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/default_cfg.xml";
 
         FileManager configFileManager = new FileManager(configPath);
         ConfigurationData configurationData = new ConfigurationData();
@@ -47,7 +52,7 @@ internal class Program
         configFileManager.UpdateAttribute(1, configurationData.latencyl2, configurationData.memoryL2);
         configFileManager.UpdateAttribute(0, configurationData.latency, configurationData.system);
 
-        Directory.SetCurrentDirectory(@"C:\Program Files (x86)\PSATSim");
+        Directory.SetCurrentDirectory(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/Tools/PSATSim");
 
         ProcessStartInfo processStartInfo = new ProcessStartInfo();
         processStartInfo.FileName = "psatsim_con.exe";
