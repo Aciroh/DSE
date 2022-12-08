@@ -36,9 +36,10 @@ namespace TestClient
                     var serverResponseData = udpClient.Receive(ref serverEndPoint);
                     var serverResponse = Encoding.ASCII.GetString(serverResponseData);
                     Console.WriteLine("Received " + serverResponse + " from " + serverEndPoint.Address.ToString());
-                    if (serverResponse == "Yes, this is the server.")
+                    if (serverResponse != "" && serverResponse != null)
                     {
                         serverIP = serverEndPoint.Address.ToString();
+                        streamPort = Convert.ToInt32(serverResponse);
                         return;
                     }
                 }
@@ -54,6 +55,8 @@ namespace TestClient
         private void ConnectTCP()
         {
             //TODO
+            TcpClient tcpClient = new TcpClient();
+            tcpClient.
         }
     }
 }

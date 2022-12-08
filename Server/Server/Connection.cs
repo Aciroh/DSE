@@ -23,6 +23,7 @@ namespace Server
 
         private int listenPort;
         private int streamPort;
+        private List<int> ports = new List<int>(7777);
 
 
         public void StartServer()
@@ -53,8 +54,9 @@ namespace Server
 
                 Console.WriteLine($"Received broadcast from {broadcastAddress} :");
                 Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
-                string response = "Yes, this is the server.";
-                udpClient.Send(Encoding.ASCII.GetBytes(response), response.Length, broadcastAddress);
+                String port = ports.Last().ToString();
+                ports.Add(ports.Last() + 1);
+                udpClient.Send(Encoding.ASCII.GetBytes(port), port.Length, broadcastAddress);
             }
         }
 
