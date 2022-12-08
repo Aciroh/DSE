@@ -23,7 +23,8 @@ namespace Server
 
         private int listenPort;
         private int streamPort;
-        private List<int> ports = new List<int>(7777);
+        private List<int> ports = new List<int> { 7777 };
+
 
 
         public void StartServer()

@@ -56,7 +56,6 @@ namespace TestClient
         {
             //TODO
             TcpClient tcpClient = new TcpClient();
-            tcpClient.
         }
     }
 }
