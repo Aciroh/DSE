@@ -1,26 +1,26 @@
 ﻿<Properties StartupConfiguration="{4F6F773F-7FE5-49FC-AB96-0A94616FCCC9}|Default">
-  <MonoDevelop.Ide.ItemProperties.Client FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Client/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Client/Connection.cs">
     <Files>
-      <File FileName="Client/Program.cs" Line="1" Column="1" />
+      <File FileName="Client/Program.cs" Line="15" Column="1" />
+      <File FileName="Client/Connection.cs" Line="57" Column="70" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Client" expanded="True">
-            <Node name="Client" expanded="True" />
+            <Node name="Client" expanded="True">
+              <Node name="Connection.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Client PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
