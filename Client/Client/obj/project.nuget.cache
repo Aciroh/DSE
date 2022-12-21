@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aQMdxCDsNXdBiXGhIM6vuf+yXk5D12t8awb4uL78Xu1bqCks/vPCe1hGJKIx+QXa3g/+57Xcap3QePMjJ+4VXg==",
+  "dgSpecHash": "iz7MkWHHcT9DFfvv24+d8vAj2O5VKd6AfkaDQCUMd7ZwHvS2C3eJGSKxMUVk0o2Ra9/9lqGZXfsrfijaMSxyOw==",
   "success": true,
-  "projectFilePath": "H:\\Repos\\DSE\\Client\\Client\\Client.csproj",
+  "projectFilePath": "/Users/horatiu/Repositories/DSE/Client/Client/Client.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

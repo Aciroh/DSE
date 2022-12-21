@@ -11,7 +11,7 @@ internal class Program
     {
 
         Config config = new Config();
-        Connection connection = new Connection(config.GetPort(), config.GetPort());
+        Connection connection = new Connection(config.GetPort());
 
 
         //String outputPath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/output.xml";

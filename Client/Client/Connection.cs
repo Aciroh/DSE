@@ -39,6 +39,8 @@ namespace TestClient
                     {
                         serverIP = serverEndPoint.Address.ToString();
                         serverPort = Convert.ToInt32(serverResponse);
+                        Thread connectThread = new Thread(ConnectTCP);
+                        connectThread.Start();
                         return;
                     }
                 }
@@ -73,6 +75,7 @@ namespace TestClient
 
                 // Get a client stream for reading and writing.
                 NetworkStream stream = tcpClient.GetStream();
+
 
                 // Send the message to the connected TcpServer.
                 stream.Write(data, 0, data.Length);
