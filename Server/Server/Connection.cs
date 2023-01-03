@@ -23,6 +23,8 @@ namespace Server
 
         private int listenPort;
         private int streamPort;
+        private List<int> ports = new List<int> { 7778 };
+
 
 
         public void StartServer()
@@ -32,6 +34,8 @@ namespace Server
             //udpClient.ExclusiveAddressUse = false; // only if you want to send/receive on same machine.
             Thread listenBroadcast = new Thread(ListenUDP);
             listenBroadcast.Start();
+            Thread listenTCP = new Thread(ListenTCP);
+            listenTCP.Start();
         }
 
         internal bool CheckForRunningServers()
@@ -53,20 +57,21 @@ namespace Server
 
                 Console.WriteLine($"Received broadcast from {broadcastAddress} :");
                 Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
-                string response = "Yes, this is the server.";
-                udpClient.Send(Encoding.ASCII.GetBytes(response), response.Length, broadcastAddress);
+                String port = ports.Last().ToString();
+                ports.Add(ports.Last() + 1);
+                udpClient.Send(Encoding.ASCII.GetBytes(port), port.Length, broadcastAddress);
             }
         }
 
-        public string GetLocalIP()
+        public IPAddress GetLocalIP()
         {
-            string ipResult = "0";
+            IPAddress ipResult = IPAddress.None;
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    ipResult = ip.ToString();
+                    ipResult = ip;
                 }
             }
             return ipResult;
@@ -75,6 +80,63 @@ namespace Server
         private void ListenTCP()
         {
             //TODO
+
+            int clientCount = 0;
+            IPAddress localIP = GetLocalIP();
+
+
+            while (true)
+            {
+                while(clientCount == ports.Count())
+                {
+                    //Do nothing. Wait for more clients
+                }
+                TcpListener tcpListener = new TcpListener(localIP, ports.Last());
+                tcpListener.Start();
+                var listenerThread = new Thread(
+                        () => CommunicateWithClient(tcpListener));
+                listenerThread.Start();
+                clientCount++;
+            }
+        }
+
+        private void CommunicateWithClient(TcpListener tcpListener)
+        {
+            String data = null;
+            Byte[] bytes = new byte[256];
+            while (true)
+            {
+                Console.Write("Waiting for a connection... ");
+
+                // Perform a blocking call to accept requests.
+                // You could also use server.AcceptSocket() here.
+                using TcpClient client = tcpListener.AcceptTcpClient();
+                Console.WriteLine("Connected!");
+
+                data = null;
+
+                // Get a stream object for reading and writing
+                NetworkStream stream = client.GetStream();
+
+                int i;
+
+                // Loop to receive all the data sent by the client.
+                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                {
+                    // Translate data bytes to a ASCII string.
+                    data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                    Console.WriteLine("Received: {0}", data);
+
+                    // Process the data sent by the client.
+                    data = data.ToUpper();
+
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+
+                    // Send back a response.
+                    stream.Write(msg, 0, msg.Length);
+                    Console.WriteLine("Sent: {0}", data);
+                }
+            }
         }
 
 
