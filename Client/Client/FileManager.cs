@@ -17,6 +17,7 @@ namespace Client
         {
             this.path = path;
             xmlDocument.Load(path);
+            //xmlDocument.LoadXml(path);
         }
 
         public void PrintNodeAttribute(String targetNode, int attributeIndex)
@@ -40,6 +41,17 @@ namespace Client
             node.Attributes[attributeIndex].Value = newValue;
 
             xmlDocument.Save(path);
+        }
+
+        public String ReadAttribute(int attributeIndex, String targetNode)
+        {
+            String nodePath = "psatsim_results/" + targetNode;
+
+            Console.WriteLine(nodePath);
+
+            XmlNode node = xmlDocument.SelectSingleNode(nodePath);
+
+            return node.Attributes[attributeIndex].Value;
         }
 
 

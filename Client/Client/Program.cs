@@ -32,7 +32,7 @@ internal class Program
         configFileManager.UpdateAttribute(7, configurationData.separate_dispatch, configurationData.general);
         configFileManager.UpdateAttribute(8, configurationData.seed, configurationData.general);
         configFileManager.UpdateAttribute(9, configurationData.trace, configurationData.general);
-        configFileManager.UpdateAttribute(10, configurationData.output, configurationData.general);
+        configFileManager.UpdateAttribute(10, configurationData.outputPath, configurationData.general);
         configFileManager.UpdateAttribute(11, configurationData.vdd, configurationData.general);
         configFileManager.UpdateAttribute(12, configurationData.frequency, configurationData.general);
 
@@ -61,6 +61,22 @@ internal class Program
         processStartInfo.FileName = "psatsim_con.exe";
         processStartInfo.ArgumentList.Add(configPath);
         processStartInfo.ArgumentList.Add(outputPath);
+        processStartInfo.ArgumentList.Add("-c");
+        processStartInfo.ArgumentList.Add("-g");
         Process.Start(processStartInfo);
-    }
+
+        Process process = new Process();
+        process.StartInfo = processStartInfo;
+
+        process.Start();
+
+        while (!process.HasExited)
+        { 
+            
+        }
+
+        configFileManager = new FileManager(outputPath);
+        Console.WriteLine(configFileManager.ReadAttribute(3, configurationData.outputTargetNodePath));
+        Console.WriteLine(configFileManager.ReadAttribute(5, configurationData.outputTargetNodePath));
+}
 }

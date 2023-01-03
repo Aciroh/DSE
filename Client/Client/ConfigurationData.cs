@@ -30,7 +30,7 @@ namespace Client
         public String separate_dispatch { get; set; } = "true";
         public String seed { get; set; } = "0";
         public String trace { get; set; } = "compress.tra";
-        public String output { get; set; } = "output.xml";
+        public String outputPath { get; set; } = "output.xml";
         public String vdd { get; set; } = "2.3";
         public String frequency { get; set; } = "600";
      
@@ -51,6 +51,10 @@ namespace Client
         public String latencyl2 { get; set; } = "3";
         public String latency { get; set; } = "20";
 
+
+        // Output Results
+
+        public String outputTargetNodePath { get; set; } = "variation/general";
 
     }
 }
