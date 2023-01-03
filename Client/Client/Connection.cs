@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TestClient
+namespace Client
 {
     internal class Connection
     {
