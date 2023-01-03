@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\Roberto\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\Repos\\DSE\\TestClient\\TestClient\\TestClient.csproj",
+      "projectUniqueName": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\TestClient\\TestClient\\TestClient.csproj",
       "projectName": "TestClient",
-      "projectPath": "H:\\Repos\\DSE\\TestClient\\TestClient\\TestClient.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "H:\\Repos\\DSE\\TestClient\\TestClient\\obj\\",
+      "projectPath": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\TestClient\\TestClient\\TestClient.csproj",
+      "packagesPath": "C:\\Users\\Roberto\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\TestClient\\TestClient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Roberto\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

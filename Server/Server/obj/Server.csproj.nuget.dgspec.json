@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "H:\\Repos\\DSE\\Server\\Server\\Server.csproj": {}
+    "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "H:\\Repos\\DSE\\Server\\Server\\Server.csproj": {
+    "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\Repos\\DSE\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "H:\\Repos\\DSE\\Server\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "H:\\Repos\\DSE\\Server\\Server\\obj\\",
+        "projectPath": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\Roberto\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Roberto\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
