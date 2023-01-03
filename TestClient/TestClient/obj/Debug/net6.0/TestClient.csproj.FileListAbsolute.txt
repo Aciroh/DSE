@@ -1,0 +1,30 @@
+H:\Repos\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.exe
+H:\Repos\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.deps.json
+H:\Repos\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.runtimeconfig.json
+H:\Repos\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.dll
+H:\Repos\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.pdb
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.csproj.AssemblyReference.cache
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.GeneratedMSBuildEditorConfig.editorconfig
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.AssemblyInfoInputs.cache
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.AssemblyInfo.cs
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.csproj.CoreCompileInputs.cache
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.dll
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\refint\TestClient.dll
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.pdb
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.genruntimeconfig.cache
+H:\Repos\DSE\TestClient\TestClient\obj\Debug\net6.0\ref\TestClient.dll
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.exe
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.deps.json
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.runtimeconfig.json
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.dll
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\bin\Debug\net6.0\TestClient.pdb
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.csproj.AssemblyReference.cache
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.AssemblyInfoInputs.cache
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.AssemblyInfo.cs
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.csproj.CoreCompileInputs.cache
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.dll
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\refint\TestClient.dll
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.pdb
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\TestClient.genruntimeconfig.cache
+C:\Users\Roberto\Desktop\Proiect Florea\DSE\TestClient\TestClient\obj\Debug\net6.0\ref\TestClient.dll

@@ -1,3 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using TestClient;
 
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        Config config = new Config();
+        Connection connection = new Connection(config.GetPort(), config.GetPort());
+
+    }
+}
+
+//Thread listener = new Thread(ParameterizedThreadStart);
