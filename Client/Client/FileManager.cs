@@ -33,13 +33,21 @@ namespace Client
         public void UpdateAttribute(int attributeIndex, String newValue, String targetNode)
         {
             String nodePath = "psatsim/" + targetNode;
-            Console.WriteLine(nodePath);
 
             XmlNode node = xmlDocument.SelectSingleNode(nodePath);
    
             node.Attributes[attributeIndex].Value = newValue;
 
             xmlDocument.Save(path);
+        }
+
+        public String ReadAttribute(int attributeIndex, String targetNode)
+        {
+            String nodePath = "psatsim_results/" + targetNode;
+
+            XmlNode node = xmlDocument.SelectSingleNode(nodePath);
+
+            return node.Attributes[attributeIndex].Value;
         }
 
 
