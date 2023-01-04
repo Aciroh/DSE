@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+
 
 namespace Server
 {
     internal class Connection
     {
+        private ConfigGenerator generator;
         private List<TcpClient> tcpClients = new List<TcpClient>();
         private List<Boolean> tcpClientsConfigSent = new List<Boolean>();
         public Connection(int listenPort, int streamPort)
         {
+            generator = new ConfigGenerator();
             this.listenPort = listenPort;
             this.streamPort = streamPort;
             if (CheckForRunningServers())
@@ -115,8 +114,7 @@ namespace Server
                 // Perform a blocking call to accept requests.
                 // You could also use server.AcceptSocket() here.
                 using TcpClient client = tcpListener.AcceptTcpClient();
-                tcpClientsConfigSent.Add(false);
-                tcpClients.Add(client);
+                addClientToList(client);
                 Console.WriteLine("Connected!");
 
                 data = null;
@@ -147,12 +145,26 @@ namespace Server
                 }
                 catch
                 {
-                    tcpClients.Remove(client);
+                    removeClientFromList(client);
                 }
                 
             }
         }
 
+        private void addClientToList(TcpClient client)
+        {
+            tcpClientsConfigSent.Add(false);
+            tcpClients.Add(client);
+            sendToFirstAvailableClient(generator.getRandomConfig("ConfigNew"));
+        }
+
+        private void removeClientFromList(TcpClient client)
+        {
+            int index = tcpClients.IndexOf(client);
+            tcpClients.RemoveAt(index);
+            tcpClientsConfigSent.RemoveAt(index);
+        }
+    
         public void sendToFirstAvailableClient(SimulationConfig config)
         {
             bool sent = false;
