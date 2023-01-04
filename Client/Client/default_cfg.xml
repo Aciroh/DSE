@@ -1,6 +1,6 @@
 <psatsim>
   <config name="Config-7">
-    <general superscalar="6" rename="18" reorder="20" rsb_architecture="distributed" rs_per_rsb="2" speculative="true" speculation_accuracy="0.980" separate_dispatch="true" seed="0" trace="compress.tra" output="output.xml" vdd="2.3" frequency="600" />
+    <general superscalar="6" rename="18" reorder="20" rsb_architecture="distributed" rs_per_rsb="2" speculative="true" speculation_accuracy="0.980" separate_dispatch="true" seed="0" trace="toast.tra" output="output.xml" vdd="2.3" frequency="600" />
     <execution architecture="standard" integer="2" floating="2" branch="1" memory="1" />
     <!-- This is the structure for the simple system architecture
 	
