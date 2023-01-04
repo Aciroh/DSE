@@ -9,6 +9,10 @@ internal class Program
 
         Connection con = new Connection(config.GetPort(), config.GetPort()+1);
 
+        ConfigGenerator generator = new ConfigGenerator();
+        
+        
+        con.sendToFirstAvailableClient(generator.getRandomConfig("Config1"));
     }
 }
 

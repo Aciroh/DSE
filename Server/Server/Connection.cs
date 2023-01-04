@@ -11,6 +11,8 @@ namespace Server
 {
     internal class Connection
     {
+        private List<TcpClient> tcpClients = new List<TcpClient>();
+        private List<Boolean> tcpClientsConfigSent = new List<Boolean>();
         public Connection(int listenPort, int streamPort)
         {
             this.listenPort = listenPort;
@@ -91,7 +93,9 @@ namespace Server
                 {
                     //Do nothing. Wait for more clients
                 }
+
                 TcpListener tcpListener = new TcpListener(localIP, ports.Last());
+                
                 tcpListener.Start();
                 var listenerThread = new Thread(
                         () => CommunicateWithClient(tcpListener));
@@ -111,6 +115,8 @@ namespace Server
                 // Perform a blocking call to accept requests.
                 // You could also use server.AcceptSocket() here.
                 using TcpClient client = tcpListener.AcceptTcpClient();
+                tcpClientsConfigSent.Add(false);
+                tcpClients.Add(client);
                 Console.WriteLine("Connected!");
 
                 data = null;
@@ -139,6 +145,47 @@ namespace Server
             }
         }
 
+        public void sendToFirstAvailableClient(SimulationConfig config)
+        {
+            bool sent = false;
+            Console.WriteLine("Sending config");
+            while (!sent)
+            {
+                for (int i = 0; i < tcpClients.Count; i++)
+                {
+                    if (!tcpClientsConfigSent[i])
+                    {
+                        NetworkStream stream = tcpClients[i].GetStream();
+                        byte[] msg = convertSimulationConfigToByte(config);
+                        stream.Write(msg,0,msg.Length);
+                        sent = true;
+                    }
+                }
+            }
+        }
 
+        private byte[] convertSimulationConfigToByte(SimulationConfig config)
+        {
+            String entireConfig = "";
+            String delimiter = "##";
+            entireConfig += config.ConfigName + delimiter;
+            entireConfig += config.Superscalar + delimiter;
+            entireConfig += config.Rename + delimiter;
+            entireConfig += config.Reorder + delimiter;
+            entireConfig += config.RsbArchitecture + delimiter;
+            entireConfig += config.RsPerRsb + delimiter;
+            entireConfig += config.Speculative + delimiter;
+            entireConfig += config.SpeculationAccuracy + delimiter;
+            entireConfig += config.SeparateDispatch + delimiter;
+            entireConfig += config.Integer + delimiter;
+            entireConfig += config.Floating + delimiter;
+            entireConfig += config.Branch + delimiter;
+            entireConfig += config.Memory + delimiter;
+            entireConfig += config.MemoryArchitecture + delimiter;
+            entireConfig += config.L1DataHitrate + delimiter;
+            entireConfig += config.L1CodeHitrate + delimiter;
+            entireConfig += config.L2Hitrate + delimiter;
+            return System.Text.Encoding.ASCII.GetBytes(entireConfig);
+        }
     }
 }

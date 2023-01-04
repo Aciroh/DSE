@@ -80,7 +80,7 @@ namespace Client
                 // Send the message to the connected TcpServer.
                 stream.Write(data, 0, data.Length);
 
-                Console.WriteLine("Sent: {0}", message);
+                Console.WriteLine("Sent: " + message);
 
                 // Receive the server response.
 
@@ -93,8 +93,11 @@ namespace Client
                 // Read the first batch of the TcpServer response bytes.
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received: {0}", responseData);
-
+                Console.WriteLine("Received: " + responseData);
+                
+                //Thread care sa asculte non stop de la server;
+                Thread listenThread = new Thread(() => ListenTCP(tcpClient));
+                listenThread.Start();
                 // Explicit close is not necessary since TcpClient.Dispose() will be
                 // called automatically.
                 // stream.Close();
@@ -102,15 +105,29 @@ namespace Client
             }
             catch (ArgumentNullException e)
             {
-                Console.WriteLine("ArgumentNullException: {0}", e);
+                Console.WriteLine("ArgumentNullException: " +  e);
             }
             catch (SocketException e)
             {
-                Console.WriteLine("SocketException: {0}", e);
+                Console.WriteLine("SocketException: " + e);
             }
 
             Console.WriteLine("\n Press Enter to continue...");
             Console.Read();
+        }
+
+        private void ListenTCP(TcpClient tcpClient)
+        {
+            Console.WriteLine("Started listener");
+            Console.WriteLine(tcpClient.Connected);
+            while (tcpClient.Connected)
+            {
+                NetworkStream stream = tcpClient.GetStream();
+                Byte[] data = new Byte[256];
+                Int32 bytes = stream.Read(data, 0, data.Length);
+                String responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                Console.WriteLine("Received in loop: " +  responseData);
+            }
         }
     }
 }
