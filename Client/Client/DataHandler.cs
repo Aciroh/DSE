@@ -33,7 +33,6 @@ namespace Client
             configFileManager.UpdateAttribute(6, configurationData.speculation_accuracy, configurationData.general);
             configFileManager.UpdateAttribute(7, configurationData.separate_dispatch, configurationData.general);
             configFileManager.UpdateAttribute(8, configurationData.seed, configurationData.general);
-            configFileManager.UpdateAttribute(9, configurationData.trace, configurationData.general);
             configFileManager.UpdateAttribute(10, configurationData.outputPath, configurationData.general);
             configFileManager.UpdateAttribute(11, configurationData.vdd, configurationData.general);
             configFileManager.UpdateAttribute(12, configurationData.frequency, configurationData.general);
@@ -56,28 +55,49 @@ namespace Client
             configFileManager.UpdateAttribute(0, configurationData.latency, configurationData.system);
         }
 
+        public void setTrace(int traceNumber) {
+            configFileManager = new FileManager(configPath);
+            configFileManager.UpdateAttribute(9, configurationData.tracesList[traceNumber], configurationData.general);
+            Console.WriteLine(configurationData.tracesList[traceNumber]);
+        }
+
         public void runConfiguration() {
             Directory.SetCurrentDirectory(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/Tools/PSATSim");
 
-            ProcessStartInfo processStartInfo = new ProcessStartInfo();
-            processStartInfo.FileName = "psatsim_con.exe";
-            processStartInfo.ArgumentList.Add(configPath);
-            processStartInfo.ArgumentList.Add(outputPath);
-            processStartInfo.ArgumentList.Add("-cg");
+            int numberOfTraces = 10;
+            double ipcSum = 0;
+            double powerSum = 0;
 
-            Process process = new Process();
-            process.StartInfo = processStartInfo;
-
-            process.Start();
-
-            while (!process.HasExited)
+            for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++)
             {
+                setTrace(traceNumber);
 
+                ProcessStartInfo processStartInfo = new ProcessStartInfo();
+                processStartInfo.FileName = "psatsim_con.exe";
+                processStartInfo.ArgumentList.Add(configPath);
+                processStartInfo.ArgumentList.Add(outputPath);
+                processStartInfo.ArgumentList.Add("-cg");
+
+                Process process = new Process();
+                process.StartInfo = processStartInfo;
+
+                process.Start();
+
+                while (!process.HasExited)
+                {
+
+                }
+
+                configFileManager = new FileManager(outputPath);
+                ipcSum += Convert.ToDouble(configFileManager.ReadAttribute(3, configurationData.outputTargetNodePath));
+                powerSum += Convert.ToDouble(configFileManager.ReadAttribute(5, configurationData.outputTargetNodePath));
             }
 
-            configFileManager = new FileManager(outputPath);
-            Console.WriteLine(configFileManager.ReadAttribute(3, configurationData.outputTargetNodePath));
-            Console.WriteLine(configFileManager.ReadAttribute(5, configurationData.outputTargetNodePath));
+            double ipc = ipcSum / numberOfTraces;
+            double power = powerSum/ numberOfTraces;
+
+            Console.WriteLine(ipc);
+            Console.WriteLine(power);
         }
     }
 }

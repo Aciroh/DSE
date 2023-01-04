@@ -8,6 +8,7 @@ namespace Client
 {
     internal class ConfigurationData
     {
+
         //XML nodes paths
         public String config { get; set; } = "config";
         public String general { get; set; } = "config/general";
@@ -29,7 +30,19 @@ namespace Client
         public String speculation_accuracy { get; set; } = "0.980";
         public String separate_dispatch { get; set; } = "true";
         public String seed { get; set; } = "0";
-        public String trace { get; set; } = "compress.tra";
+
+        public List<String> tracesList = new List<string> {
+            "applu.tra",
+            "compress.tra",
+            "epic.tra",
+            "fpppp.tra",
+            "ijpeg.tra",
+            "mpeg2d.tra",
+            "mpeg2e.tra",
+            "pegwitd.tra",
+            "perl.tra",
+            "toast.tra"
+        };
         public String outputPath { get; set; } = "output.xml";
         public String vdd { get; set; } = "2.3";
         public String frequency { get; set; } = "600";

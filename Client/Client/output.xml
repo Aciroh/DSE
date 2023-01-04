@@ -3,15 +3,15 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 <psatsim_results>
 <variation
 	configuration="Config-7" variation="1"
-	started="04 January 2023, 16:27:18" runtime="1.697">
+	started="04 January 2023, 17:04:29" runtime="1.042">
 	<psatsim>
 		<config name="Config-7" number="1">
 			<general
 				superscalar="6" rename="18" reorder="20"
 				rsb_architecture="distributed" rs_per_rsb="2"
 				speculative="true" speculation_accuracy="0.980"
-				separate_dispatch="true" seed="1672842438"
-				trace="compress.tra" output="output.xml"
+				separate_dispatch="true" seed="1672844669"
+				trace="toast.tra" output="output.xml"
 				vdd="2.3" freq="600" />
 			<execution architecture="standard"
 				integer="2" floating="2" branch="1" memory="1" />
@@ -24,34 +24,34 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 		</config>
 	</psatsim>
 	<general
-		cycles="63300"
-		instructions="116748"
-		fetches="121307"
-		ipc="1.844360"
-		energy="1.20419"
-		power="11.4142">
+		cycles="60949"
+		instructions="103526"
+		fetches="104990"
+		ipc="1.698568"
+		energy="1.49664"
+		power="14.7333">
 		<regfile
-			total="226720"
-			utilization_avg="3.58167"
+			total="229108"
+			utilization_avg="3.75901"
 			capacitance="0.91095"
-			activity="29631.1"
-			energy="0.14279"
-			power="1.35346"
-			power_percent="11.8577" />
+			activity="35603.2"
+			energy="0.171569"
+			power="1.68898"
+			power_percent="11.4637" />
 		<resultbus
-			total="117180"
-			utilization_avg="1.85118"
+			total="103675"
+			utilization_avg="1.70101"
 			capacitance="1.44275"
-			activity="23907"
-			energy="0.182462"
-			power="1.72949"
-			power_percent="15.1522" />
+			activity="21646.1"
+			energy="0.165207"
+			power="1.62634"
+			power_percent="11.0385" />
 		<clockbus
 			capacitance="1.82351"
-			activity="63300"
-			energy="0.610616"
+			activity="60949"
+			energy="0.587938"
 			power="5.78783"
-			power_percent="50.7075" />
+			power_percent="39.2839" />
 	</general>
 </variation>
 

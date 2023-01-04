@@ -17,7 +17,6 @@ namespace Client
         {
             this.path = path;
             xmlDocument.Load(path);
-            //xmlDocument.LoadXml(path);
         }
 
         public void PrintNodeAttribute(String targetNode, int attributeIndex)
