@@ -34,7 +34,6 @@ namespace Client
         public void UpdateAttribute(int attributeIndex, String newValue, String targetNode)
         {
             String nodePath = "psatsim/" + targetNode;
-            Console.WriteLine(nodePath);
 
             XmlNode node = xmlDocument.SelectSingleNode(nodePath);
    
@@ -46,8 +45,6 @@ namespace Client
         public String ReadAttribute(int attributeIndex, String targetNode)
         {
             String nodePath = "psatsim_results/" + targetNode;
-
-            Console.WriteLine(nodePath);
 
             XmlNode node = xmlDocument.SelectSingleNode(nodePath);
 

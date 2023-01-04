@@ -3,14 +3,14 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 <psatsim_results>
 <variation
 	configuration="Config-7" variation="1"
-	started="03 January 2023, 18:36:45" runtime="1.822">
+	started="04 January 2023, 16:27:18" runtime="1.697">
 	<psatsim>
 		<config name="Config-7" number="1">
 			<general
 				superscalar="6" rename="18" reorder="20"
 				rsb_architecture="distributed" rs_per_rsb="2"
 				speculative="true" speculation_accuracy="0.980"
-				separate_dispatch="true" seed="1672763805"
+				separate_dispatch="true" seed="1672842438"
 				trace="compress.tra" output="output.xml"
 				vdd="2.3" freq="600" />
 			<execution architecture="standard"
@@ -24,34 +24,34 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 		</config>
 	</psatsim>
 	<general
-		cycles="63542"
+		cycles="63300"
 		instructions="116748"
-		fetches="122245"
-		ipc="1.837336"
-		energy="1.20899"
-		power="11.416">
+		fetches="121307"
+		ipc="1.844360"
+		energy="1.20419"
+		power="11.4142">
 		<regfile
-			total="227299"
-			utilization_avg="3.57715"
+			total="226720"
+			utilization_avg="3.58167"
 			capacitance="0.91095"
-			activity="29732.9"
-			energy="0.143281"
-			power="1.35294"
-			power_percent="11.8513" />
+			activity="29631.1"
+			energy="0.14279"
+			power="1.35346"
+			power_percent="11.8577" />
 		<resultbus
-			total="117262"
-			utilization_avg="1.84543"
+			total="117180"
+			utilization_avg="1.85118"
 			capacitance="1.44275"
-			activity="23943.5"
-			energy="0.18274"
-			power="1.72554"
-			power_percent="15.1151" />
+			activity="23907"
+			energy="0.182462"
+			power="1.72949"
+			power_percent="15.1522" />
 		<clockbus
 			capacitance="1.82351"
-			activity="63542"
-			energy="0.612951"
+			activity="63300"
+			energy="0.610616"
 			power="5.78783"
-			power_percent="50.6994" />
+			power_percent="50.7075" />
 	</general>
 </variation>
 
