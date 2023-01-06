@@ -145,10 +145,9 @@ namespace Client
 
             double ipc = ipcSum / numberOfTraces;
             double power = powerSum/ numberOfTraces;
-            
-            Console.WriteLine(ipc);
-            Console.WriteLine(power);
-            return ipc + "##" + power;
+
+            string delimiter = "##";
+            return "output" + delimiter + configurationData.configurationName + delimiter + ipc + delimiter + power + delimiter;
         }
     }
 }

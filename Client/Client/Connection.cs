@@ -72,38 +72,38 @@ namespace Client
                 // Prefer a using declaration to ensure the instance is Disposed later.
                 using TcpClient tcpClient = new TcpClient(serverIP, serverPort);
                 this.client = tcpClient;
-                string message = "Hello there, General Kenobi";
 
                 // Translate the passed message into ASCII and store it as a Byte array.
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
 
                 // Get a client stream for reading and writing.
                 stream = tcpClient.GetStream();
-
-
-                // Send the message to the connected TcpServer.
-                stream.Write(data, 0, data.Length);
-
-                Console.WriteLine("Sent: " + message);
 
                 // Receive the server response.
 
                 // Buffer to store the response bytes.
                 while (true)
                 {
-                    data = new Byte[256];
+                    Byte[] data =  new Byte[256];
 
                     // String to store the response ASCII representation.
                     String responseData = String.Empty;
 
                     // Read the first batch of the TcpServer response bytes.
-                    Int32 bytes = stream.Read(data, 0, data.Length);
-                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                    Console.WriteLine("Received: " + responseData);
-                    responseData.Trim();
-                    if (responseData.EndsWith("##"))
+                    try
                     {
-                        onConfigurationReceived(responseData);
+                        Int32 bytes = stream.Read(data, 0, data.Length);
+                        responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                        Console.WriteLine("Received: " + responseData);
+                        responseData.Trim();
+                        if (responseData.EndsWith("##"))
+                        {
+                            onConfigurationReceived(responseData);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Exception at read: " + e.Message + e.StackTrace);
+                        return;
                     }
                 }
                 //Thread care sa asculte non stop de la server;
@@ -137,7 +137,6 @@ namespace Client
             Byte[] data = System.Text.Encoding.ASCII.GetBytes(output);
             // Send the message to the connected TcpServer.
             stream.Write(data, 0, data.Length);
-
             Console.WriteLine("Sent: " + output);
         }
     }

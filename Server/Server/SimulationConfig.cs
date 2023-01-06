@@ -2,6 +2,7 @@ namespace Server;
 
 public class SimulationConfig
 {
+    public int ConfigID => config_id;
     public string ConfigName => config_name;
 
     public int Superscalar => superscalar;
@@ -36,6 +37,8 @@ public class SimulationConfig
 
     public float L2Hitrate => l2_hitrate;
 
+    //Int id
+    private int config_id;
     //String name
     private String config_name;
     //[1...16]

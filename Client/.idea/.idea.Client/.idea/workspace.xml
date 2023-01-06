@@ -77,23 +77,4 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Client/Connection.cs</url>
-          <line>105</line>
-          <properties documentPath="F:\Repos\DSE\Client\Client\Connection.cs" initialLine="105" containingFunctionPresentation="method 'ConnectTCP'">
-            <startOffsets>
-              <option value="3954" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3992" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
 </project>

@@ -6,11 +6,13 @@ using System.Text;
 
 namespace Server
 {
-    internal class Connection
+    public class Connection
     {
         private ConfigGenerator generator;
         private List<TcpClient> tcpClients = new List<TcpClient>();
         private List<Boolean> tcpClientsConfigSent = new List<Boolean>();
+        public event EventHandler OutputReceived;
+        public event EventHandler ConnectionEstablished;
         public Connection(int listenPort, int streamPort)
         {
             generator = new ConfigGenerator();
@@ -120,9 +122,9 @@ namespace Server
             var readerThread = new Thread(
                     () => readFromClient(client));
             readerThread.Start();
-            var writerThread = new Thread(
-                () => writeToClient(client));
-            writerThread.Start();
+            //var writerThread = new Thread(
+                //() => writeToClient(client));
+            //writerThread.Start();
             // Loop to receive all the data sent by the client.
             // try
             // {
@@ -163,13 +165,26 @@ namespace Server
                     Int32 bytes = stream.Read(data, 0, data.Length);
                     responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                     Console.WriteLine("Received: " + responseData);
+                    if (responseData == "")
+                    {
+                        removeClientFromList(client);
+                    }
+                    if (responseData.EndsWith("##"))
+                    {
+                        onReceiveOutput(responseData);
+                    }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception at read from client: " + e.Message);
+                Console.WriteLine("Exception at read from client: " + e.Message + e.StackTrace);
                 removeClientFromList(client);
             }
+        }
+
+        private void onReceiveOutput(String message)
+        {
+            OutputReceived?.Invoke(message, EventArgs.Empty);
         }
 
         private void writeToClient(TcpClient client)
@@ -204,7 +219,13 @@ namespace Server
             tcpClientsConfigSent.Add(false);
             tcpClients.Add(client);            
             Console.WriteLine("Adding client. New list count:" + tcpClients.Count);
-            sendToFirstAvailableClient(generator.getRandomConfig("ConfigNew"));
+            //sendToFirstAvailableClient(generator.getRandomConfig("ConfigNew"));
+            onConnectionEstablished();
+        }
+
+        private void onConnectionEstablished()
+        {
+            ConnectionEstablished?.Invoke(null, EventArgs.Empty);
         }
 
         private void removeClientFromList(TcpClient client)

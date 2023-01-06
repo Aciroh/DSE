@@ -68,6 +68,11 @@ namespace Server
         {
             return Convert.ToInt32(config[Parameters.Port]);
         }
+
+        public int GetGenerationCount()
+        {
+            return Convert.ToInt32(config[Parameters.GenerationCount]);
+        }
         
     }
 }
