@@ -2,56 +2,37 @@
 Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Client/default_cfg.xml with 1 variations -->
 <psatsim_results>
 <variation
-	configuration="Config-7" variation="1"
-	started="04 January 2023, 17:04:29" runtime="1.042">
-	<psatsim>
-		<config name="Config-7" number="1">
-			<general
-				superscalar="6" rename="18" reorder="20"
-				rsb_architecture="distributed" rs_per_rsb="2"
-				speculative="true" speculation_accuracy="0.980"
-				separate_dispatch="true" seed="1672844669"
-				trace="toast.tra" output="output.xml"
-				vdd="2.3" freq="600" />
-			<execution architecture="standard"
-				integer="2" floating="2" branch="1" memory="1" />
-			<memory architecture="l2">
-				<system latency="20" />
-				<l1_code hitrate="0.990" latency="1" />
-				<l1_data hitrate="0.970" latency="1" />
-				<l2 hitrate="0.990" latency="3" />
-			</memory>
-		</config>
-	</psatsim>
+	configuration="Config-4" variation="1"
+	started="06 January 2023, 19:45:46" runtime="1.800">
 	<general
-		cycles="60949"
-		instructions="103526"
-		fetches="104990"
-		ipc="1.698568"
-		energy="1.49664"
-		power="14.7333">
+		cycles="66228"
+		instructions="63838"
+		fetches="63838"
+		ipc="0.963913"
+		energy="2.73213"
+		power="24.752">
 		<regfile
-			total="229108"
-			utilization_avg="3.75901"
-			capacitance="0.91095"
-			activity="35603.2"
-			energy="0.171569"
-			power="1.68898"
-			power_percent="11.4637" />
+			total="136787"
+			utilization_avg="2.0654"
+			capacitance="0.167745"
+			activity="32343.1"
+			energy="0.0287003"
+			power="0.260014"
+			power_percent="1.05048" />
 		<resultbus
-			total="103675"
-			utilization_avg="1.70101"
-			capacitance="1.44275"
-			activity="21646.1"
-			energy="0.165207"
-			power="1.62634"
-			power_percent="11.0385" />
+			total="63838"
+			utilization_avg="0.963913"
+			capacitance="2.57986"
+			activity="9234.35"
+			energy="0.126026"
+			power="1.14174"
+			power_percent="4.61273" />
 		<clockbus
-			capacitance="1.82351"
-			activity="60949"
-			energy="0.587938"
-			power="5.78783"
-			power_percent="39.2839" />
+			capacitance="1.76099"
+			activity="66228"
+			energy="0.616955"
+			power="5.58937"
+			power_percent="22.5815" />
 	</general>
 </variation>
 

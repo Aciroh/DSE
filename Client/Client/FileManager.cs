@@ -16,6 +16,10 @@ namespace Client
         public FileManager(string path)
         {
             this.path = path;
+            loadXmlFile();
+        }
+
+        public void loadXmlFile() {
             xmlDocument.Load(path);
         }
 

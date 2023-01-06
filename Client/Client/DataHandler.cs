@@ -14,12 +14,12 @@ namespace Client
         String configPath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/default_cfg.xml";
 
         FileManager configFileManager;
-        FileManager outputFileManager;
+        //FileManager outputFileManager;
         ConfigurationData configurationData;
 
         public DataHandler() {
             configFileManager = new FileManager(configPath);
-            outputFileManager = new FileManager(outputPath);
+            //outputFileManager = new FileManager(outputPath);
             configurationData = new ConfigurationData();
         }
 
@@ -75,6 +75,7 @@ namespace Client
         }
 
         public void setXmlConfiguration() {
+            configFileManager = new FileManager(configPath);
             configFileManager.UpdateAttribute(0, configurationData.configurationName, configurationData.config);
             configFileManager.UpdateAttribute(0, configurationData.superscalar, configurationData.general);
             configFileManager.UpdateAttribute(1, configurationData.rename, configurationData.general);
@@ -129,7 +130,7 @@ namespace Client
                 processStartInfo.FileName = "psatsim_con.exe";
                 processStartInfo.ArgumentList.Add(configPath);
                 processStartInfo.ArgumentList.Add(outputPath);
-                processStartInfo.ArgumentList.Add("-cg");
+                processStartInfo.ArgumentList.Add("-g");
 
                 Process process = new Process();
                 process.StartInfo = processStartInfo;
@@ -141,13 +142,20 @@ namespace Client
 
                 }
 
-                ipcSum += Convert.ToDouble(outputFileManager.ReadAttribute(3, configurationData.outputTargetNodePath));
-                powerSum += Convert.ToDouble(outputFileManager.ReadAttribute(5, configurationData.outputTargetNodePath));
+                configFileManager = new FileManager(outputPath);
+                //configFileManager.loadXmlFile();
+
+                Console.WriteLine("ipc current trace: " + Convert.ToDouble(configFileManager.ReadAttribute(3, configurationData.outputTargetNodePath)));
+                Console.WriteLine("power current trace: " + Convert.ToDouble(configFileManager.ReadAttribute(5, configurationData.outputTargetNodePath)));
+
+                ipcSum += Convert.ToDouble(configFileManager.ReadAttribute(3, configurationData.outputTargetNodePath));
+                powerSum += Convert.ToDouble(configFileManager.ReadAttribute(5, configurationData.outputTargetNodePath));
             }
 
             double ipc = ipcSum / numberOfTraces;
             double power = powerSum/ numberOfTraces;
 
+            Console.WriteLine("Current output: ipc=" + ipc + " power=" + power );
             string delimiter = "##";
             Directory.SetCurrentDirectory(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + @"/bin/Debug/net6.0");
             return "output" + delimiter + configurationData.configurationName + delimiter + ipc + delimiter + power + delimiter;
