@@ -14,10 +14,12 @@ namespace Client
         String configPath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/default_cfg.xml";
 
         FileManager configFileManager;
+        FileManager outputFileManager;
         ConfigurationData configurationData;
 
         public DataHandler() {
             configFileManager = new FileManager(configPath);
+            outputFileManager = new FileManager(outputPath);
             configurationData = new ConfigurationData();
         }
 
@@ -111,7 +113,8 @@ namespace Client
             Console.WriteLine(configurationData.tracesList[traceNumber]);
         }
 
-        public String runConfiguration() {
+        public String runConfiguration()
+        {
             Directory.SetCurrentDirectory(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/Tools/PSATSim");
 
             int numberOfTraces = 10;
@@ -138,15 +141,15 @@ namespace Client
 
                 }
 
-                configFileManager = new FileManager(outputPath);
-                ipcSum += Convert.ToDouble(configFileManager.ReadAttribute(3, configurationData.outputTargetNodePath));
-                powerSum += Convert.ToDouble(configFileManager.ReadAttribute(5, configurationData.outputTargetNodePath));
+                ipcSum += Convert.ToDouble(outputFileManager.ReadAttribute(3, configurationData.outputTargetNodePath));
+                powerSum += Convert.ToDouble(outputFileManager.ReadAttribute(5, configurationData.outputTargetNodePath));
             }
 
             double ipc = ipcSum / numberOfTraces;
             double power = powerSum/ numberOfTraces;
 
             string delimiter = "##";
+            Directory.SetCurrentDirectory(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + @"/bin/Debug/net6.0");
             return "output" + delimiter + configurationData.configurationName + delimiter + ipc + delimiter + power + delimiter;
         }
     }
