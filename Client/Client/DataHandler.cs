@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,10 +21,59 @@ namespace Client
             configurationData = new ConfigurationData();
         }
 
+        public List<String> getParametersListFromString(String s)
+        {
+            Console.WriteLine("Split list");
+            List<String> parametersList = new List<string>();
+            parametersList = s.Split("##").ToList();
+            parametersList.RemoveAt(parametersList.Count-1);
+            return parametersList;
+        }
+
+        public void updateConfigurationData(List<String> parametersList)
+        {
+            if (parametersList.Count < 17)
+            {
+                return;
+            }
+            //Config Name
+            configurationData.configurationName = parametersList[0];
+            //Superscalar
+            configurationData.superscalar = parametersList[1];
+            //Rename
+            configurationData.rename = parametersList[2];
+            //Reorder
+            configurationData.reorder = parametersList[3];
+            //RSBArchitecture
+            configurationData.rsb_architecture = parametersList[4];
+            //RsPerRSB
+            configurationData.rs_per_rsb = parametersList[5];
+            //Speculative
+            configurationData.speculative = parametersList[6];
+            //SpeculationAccuracy
+            configurationData.speculation_accuracy = parametersList[7];
+            //SeparateDispatch
+            configurationData.separate_dispatch = parametersList[8];
+            //Integer
+            configurationData.integer = parametersList[9];
+            //Floating
+            configurationData.floating = parametersList[10];
+            //Branch
+            configurationData.branch = parametersList[11];
+            //Memory
+            configurationData.memoryp = parametersList[12];
+            //MemoryArchitecture
+            configurationData.architecture = parametersList[13];
+            //L1DataHitrate
+            configurationData.hitratel1d = parametersList[14];
+            //L1CodeHitrate
+            configurationData.hitratel1c = parametersList[15];
+            //L2Hitrate
+            configurationData.hitratel2 = parametersList[16];
+        }
+
         public void setXmlConfiguration() {
-
             configFileManager.UpdateAttribute(0, configurationData.configurationName, configurationData.config);
-
             configFileManager.UpdateAttribute(0, configurationData.superscalar, configurationData.general);
             configFileManager.UpdateAttribute(1, configurationData.rename, configurationData.general);
             configFileManager.UpdateAttribute(2, configurationData.reorder, configurationData.general);
@@ -61,7 +111,7 @@ namespace Client
             Console.WriteLine(configurationData.tracesList[traceNumber]);
         }
 
-        public void runConfiguration() {
+        public String runConfiguration() {
             Directory.SetCurrentDirectory(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/Tools/PSATSim");
 
             int numberOfTraces = 10;
@@ -95,9 +145,10 @@ namespace Client
 
             double ipc = ipcSum / numberOfTraces;
             double power = powerSum/ numberOfTraces;
-
+            
             Console.WriteLine(ipc);
             Console.WriteLine(power);
+            return ipc + "##" + power;
         }
     }
 }

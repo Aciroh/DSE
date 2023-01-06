@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+
 
 namespace Server
 {
     internal class Connection
     {
+        private ConfigGenerator generator;
+        private List<TcpClient> tcpClients = new List<TcpClient>();
+        private List<Boolean> tcpClientsConfigSent = new List<Boolean>();
         public Connection(int listenPort, int streamPort)
         {
+            generator = new ConfigGenerator();
             this.listenPort = listenPort;
             this.streamPort = streamPort;
             if (CheckForRunningServers())
@@ -91,54 +92,176 @@ namespace Server
                 {
                     //Do nothing. Wait for more clients
                 }
+
                 TcpListener tcpListener = new TcpListener(localIP, ports.Last());
+                
                 tcpListener.Start();
-                var listenerThread = new Thread(
-                        () => CommunicateWithClient(tcpListener));
-                listenerThread.Start();
+                //var listenerThread = new Thread(
+                //        () => CommunicateWithClient(tcpListener));
+                //listenerThread.Start();
+                CommunicateWithClient(tcpListener);
                 clientCount++;
             }
         }
 
+        
+        //Metoda asta trebuie de fapt sa nu fie pe alt thread, si sa creeze doua thread-uri: Write si Read.
         private void CommunicateWithClient(TcpListener tcpListener)
         {
-            String data = null;
-            Byte[] bytes = new byte[256];
-            while (true)
+            Console.WriteLine("Waiting for a connection... ");
+
+            // Perform a blocking call to accept requests.
+            // You could also use server.AcceptSocket() here.
+            // Aici foloseam using, dar using face dispose cand nu mai avem referinta client
+            TcpClient client = tcpListener.AcceptTcpClient();
+            addClientToList(client);
+            Console.WriteLine("Connected!");
+            int i;
+            var readerThread = new Thread(
+                    () => readFromClient(client));
+            readerThread.Start();
+            var writerThread = new Thread(
+                () => writeToClient(client));
+            writerThread.Start();
+            // Loop to receive all the data sent by the client.
+            // try
+            // {
+            //     while (true)
+            //     {
+            //         data = new Byte[256];
+            //
+            //         // String to store the response ASCII representation.
+            //         String responseData = String.Empty;
+            //
+            //         // Read the first batch of the TcpServer response bytes.
+            //         Int32 bytes = stream.Read(data, 0, data.Length);
+            //         responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            //         Console.WriteLine("Received: " + responseData);
+            //     }
+            // }
+            // catch
+            // {
+            //     removeClientFromList(client);
+            // }
+        }
+
+        private void readFromClient(TcpClient client)
+        {
+            // Loop to receive all the data sent by the client.
+            try
             {
-                Console.Write("Waiting for a connection... ");
-
-                // Perform a blocking call to accept requests.
-                // You could also use server.AcceptSocket() here.
-                using TcpClient client = tcpListener.AcceptTcpClient();
-                Console.WriteLine("Connected!");
-
-                data = null;
-
-                // Get a stream object for reading and writing
-                NetworkStream stream = client.GetStream();
-
-                int i;
-
-                // Loop to receive all the data sent by the client.
-                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                while (true)
                 {
-                    // Translate data bytes to a ASCII string.
-                    data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                    Console.WriteLine("Received: {0}", data);
+                    Byte[] data = new Byte[256];
+            
+                    // String to store the response ASCII representation.
+                    String responseData = String.Empty;
+            
+                    // Get a stream object for reading and writing
+                    NetworkStream stream = client.GetStream();
+                    // Read the first batch of the TcpServer response bytes.
+                    Int32 bytes = stream.Read(data, 0, data.Length);
+                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    Console.WriteLine("Received: " + responseData);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception at read from client: " + e.Message);
+                removeClientFromList(client);
+            }
+        }
 
-                    // Process the data sent by the client.
-                    data = data.ToUpper();
+        private void writeToClient(TcpClient client)
+        {
+            // Loop to send all the data to the client.
+            try
+            {
+                while (true)
+                {
+                    Byte[] data = new Byte[256];
+            
+                    // String to store the response ASCII representation.
+                    String responseData = String.Empty;
+            
+                    // Get a stream object for reading and writing
+                    NetworkStream stream = client.GetStream();
+                    // Read the first batch of the TcpServer response bytes.
+                    Int32 bytes = stream.Read(data, 0, data.Length);
+                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    Console.WriteLine("Received: " + responseData);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception at write to client: " + e.Message);
+                removeClientFromList(client);
+            }
+        }
 
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+        private void addClientToList(TcpClient client)
+        {
+            tcpClientsConfigSent.Add(false);
+            tcpClients.Add(client);            
+            Console.WriteLine("Adding client. New list count:" + tcpClients.Count);
+            sendToFirstAvailableClient(generator.getRandomConfig("ConfigNew"));
+        }
 
-                    // Send back a response.
-                    stream.Write(msg, 0, msg.Length);
-                    Console.WriteLine("Sent: {0}", data);
+        private void removeClientFromList(TcpClient client)
+        {
+            Console.WriteLine("Removing client");
+            if (tcpClients.Contains(client) && tcpClients.Count != 0)
+            {
+                int index = tcpClients.IndexOf(client);
+                Console.WriteLine("Attempting to remove client at index" + index);
+                tcpClients.RemoveAt(index);
+                tcpClientsConfigSent.RemoveAt(index);
+                client.Close();
+                client.Dispose();
+            }
+        }
+    
+        public void sendToFirstAvailableClient(SimulationConfig config)
+        {
+            bool sent = false;
+            Console.WriteLine("Sending config");
+            while (!sent)
+            {
+                for (int i = 0; i < tcpClients.Count; i++)
+                {
+                    if (!tcpClientsConfigSent[i])
+                    {
+                        NetworkStream stream = tcpClients[i].GetStream();
+                        byte[] msg = convertSimulationConfigToByte(config);
+                        stream.Write(msg,0,msg.Length);
+                        sent = true;
+                    }
                 }
             }
         }
 
-
+        private byte[] convertSimulationConfigToByte(SimulationConfig config)
+        {
+            String entireConfig = "";
+            String delimiter = "##";
+            entireConfig += config.ConfigName + delimiter;
+            entireConfig += config.Superscalar + delimiter;
+            entireConfig += config.Rename + delimiter;
+            entireConfig += config.Reorder + delimiter;
+            entireConfig += config.RsbArchitecture + delimiter;
+            entireConfig += config.RsPerRsb + delimiter;
+            entireConfig += config.Speculative + delimiter;
+            entireConfig += config.SpeculationAccuracy + delimiter;
+            entireConfig += config.SeparateDispatch + delimiter;
+            entireConfig += config.Integer + delimiter;
+            entireConfig += config.Floating + delimiter;
+            entireConfig += config.Branch + delimiter;
+            entireConfig += config.Memory + delimiter;
+            entireConfig += config.MemoryArchitecture + delimiter;
+            entireConfig += config.L1DataHitrate + delimiter;
+            entireConfig += config.L1CodeHitrate + delimiter;
+            entireConfig += config.L2Hitrate + delimiter;
+            return System.Text.Encoding.ASCII.GetBytes(entireConfig);
+        }
     }
 }
