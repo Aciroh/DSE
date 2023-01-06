@@ -15,9 +15,12 @@ namespace Client
             this.broadcastPort = broadcastPort;
             FindServerViaBroadcast();
         }
+        public event EventHandler ConfigurationReceived;
         int broadcastPort;
         int serverPort;
         string serverIP;
+        private NetworkStream stream;
+        private TcpClient client;
 
         void FindServerViaBroadcast()
         {
@@ -68,13 +71,14 @@ namespace Client
 
                 // Prefer a using declaration to ensure the instance is Disposed later.
                 using TcpClient tcpClient = new TcpClient(serverIP, serverPort);
+                this.client = tcpClient;
                 string message = "Hello there, General Kenobi";
 
                 // Translate the passed message into ASCII and store it as a Byte array.
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
 
                 // Get a client stream for reading and writing.
-                NetworkStream stream = tcpClient.GetStream();
+                stream = tcpClient.GetStream();
 
 
                 // Send the message to the connected TcpServer.
@@ -85,19 +89,26 @@ namespace Client
                 // Receive the server response.
 
                 // Buffer to store the response bytes.
-                data = new Byte[256];
+                while (true)
+                {
+                    data = new Byte[256];
 
-                // String to store the response ASCII representation.
-                String responseData = String.Empty;
+                    // String to store the response ASCII representation.
+                    String responseData = String.Empty;
 
-                // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received: " + responseData);
-                
+                    // Read the first batch of the TcpServer response bytes.
+                    Int32 bytes = stream.Read(data, 0, data.Length);
+                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    Console.WriteLine("Received: " + responseData);
+                    responseData.Trim();
+                    if (responseData.EndsWith("##"))
+                    {
+                        onConfigurationReceived(responseData);
+                    }
+                }
                 //Thread care sa asculte non stop de la server;
-                Thread listenThread = new Thread(() => ListenTCP(tcpClient));
-                listenThread.Start();
+                //Thread listenThread = new Thread(() => ListenTCP(tcpClient));
+                //listenThread.Start();
                 // Explicit close is not necessary since TcpClient.Dispose() will be
                 // called automatically.
                 // stream.Close();
@@ -116,18 +127,18 @@ namespace Client
             Console.Read();
         }
 
-        private void ListenTCP(TcpClient tcpClient)
+        protected virtual void onConfigurationReceived(String message)
         {
-            Console.WriteLine("Started listener");
-            Console.WriteLine(tcpClient.Connected);
-            while (tcpClient.Connected)
-            {
-                NetworkStream stream = tcpClient.GetStream();
-                Byte[] data = new Byte[256];
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                String responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received in loop: " +  responseData);
-            }
+            ConfigurationReceived?.Invoke(message,EventArgs.Empty);
+        }
+
+        public void sendOutput(String output)
+        {
+            Byte[] data = System.Text.Encoding.ASCII.GetBytes(output);
+            // Send the message to the connected TcpServer.
+            stream.Write(data, 0, data.Length);
+
+            Console.WriteLine("Sent: " + output);
         }
     }
 }
