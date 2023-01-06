@@ -210,7 +210,7 @@ namespace Server
         private void removeClientFromList(TcpClient client)
         {
             Console.WriteLine("Removing client");
-            if (tcpClients.Contains(client))
+            if (tcpClients.Contains(client) && tcpClients.Count != 0)
             {
                 int index = tcpClients.IndexOf(client);
                 Console.WriteLine("Attempting to remove client at index" + index);
