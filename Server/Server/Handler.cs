@@ -39,6 +39,7 @@ public class Handler
             for (var index = 0; index < simulations.Count; index++)
             {
                 var simulation = simulations[index];
+                Console.WriteLine(index + " ipc=" + simulation.Output[0] + " power=" + simulation.Output[1]);
                 ipcList.Add(Convert.ToDouble(simulation.Output[0]));
                 powerList.Add(Convert.ToDouble(simulation.Output[1]));
             }
@@ -68,8 +69,8 @@ public class Handler
     {
         List<String> outputList = simulationOutput.Split("##").ToList();
         String name = outputList[1];
-        String ipc = outputList[1];
-        String power = outputList[1];
+        String ipc = outputList[2];
+        String power = outputList[3];
         
         for (int index = 0; index < simulations.Count; index++)
         {
@@ -79,6 +80,7 @@ public class Handler
                 {
                     Console.WriteLine(index + " Count " + simulations.Count);
                     simulations[index].Output = new List<string>();
+
                     simulations[index].Output.Add(ipc);
                     simulations[index].Output.Add(power);
                 }
@@ -100,8 +102,8 @@ public class Handler
             for (int i = 0; i < paretoFrontSimulations.Count; i++)
             {
                 // If the point is dominated, set the flag to true and break out of the loop
-                if (output[0] <= Convert.ToDouble(paretoFrontSimulations[i].Output[0]) &&
-                    output[1] >= Convert.ToDouble(paretoFrontSimulations[i].Output[1]))
+                if (output[0] >= Convert.ToDouble(paretoFrontSimulations[i].Output[0]) &&
+                    output[1] <= Convert.ToDouble(paretoFrontSimulations[i].Output[1]))
                 {
                     isDominated = true;
                     break;
@@ -112,7 +114,7 @@ public class Handler
             {
                 Simulation simulation = findFirstSimulation(output);
                 if (simulation != null) paretoFrontSimulations.Add(simulation);
-                paretoFrontSimulations.RemoveAll(x => Convert.ToDouble(x.Output[0]) >= output[0] && Convert.ToDouble(x.Output[1]) >= output[1]);
+                paretoFrontSimulations.RemoveAll(x => Convert.ToDouble(x.Output[0]) <= output[0] && Convert.ToDouble(x.Output[1]) >= output[1]);
             }
         }
         return paretoFrontSimulations;

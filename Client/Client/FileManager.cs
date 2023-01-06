@@ -20,7 +20,17 @@ namespace Client
         }
 
         public void loadXmlFile() {
-            xmlDocument.Load(path);
+            try
+            {
+                xmlDocument.Load(path);
+            }
+            catch (IOException e)
+            {
+                // DANGER do not uncomment for your safety :')
+                //Console.WriteLine(e.Message);
+                loadXmlFile();
+            }
+            
         }
 
         public void PrintNodeAttribute(String targetNode, int attributeIndex)
