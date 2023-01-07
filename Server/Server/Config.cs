@@ -14,7 +14,10 @@ namespace Server
         {
             ConfigPath,
             Port,
-            GenerationCount
+            GenerationCount,
+            MutationChance,
+            MutationThreshold,
+            NumberOfGenerations
         }
 
         public Config()
@@ -22,6 +25,9 @@ namespace Server
             GetConfigLocation();
             config.Add(Parameters.Port, null);
             config.Add(Parameters.GenerationCount, null);
+            config.Add(Parameters.MutationChance, null);
+            config.Add(Parameters.MutationThreshold, null);
+            config.Add(Parameters.NumberOfGenerations, null);
             ReadConfig();
             PrintConfig();
         }
@@ -50,6 +56,15 @@ namespace Server
                     case string s when s.StartsWith("Generation Count:"):
                         if (s.Count() > 17) config[Parameters.GenerationCount] = s.Substring(17);
                         break;
+                    case string s when s.StartsWith("Mutation Chance:"):
+                        if (s.Count() > 17) config[Parameters.MutationChance] = s.Substring(16);
+                        break;
+                    case string s when s.StartsWith("Mutation Threshold:"):
+                        if (s.Count() > 17) config[Parameters.MutationThreshold] = s.Substring(19);
+                        break;
+                    case string s when s.StartsWith("Number Of Generations:"):
+                        if (s.Count() > 17) config[Parameters.MutationThreshold] = s.Substring(22);
+                        break;
                     //Add more parameters here
                 }
             }
@@ -64,6 +79,11 @@ namespace Server
             }
         }
 
+        public int GetGenerationMaxNumber()
+        {
+            return Convert.ToInt32(config[Parameters.NumberOfGenerations]);
+        }
+
         public int GetPort()
         {
             return Convert.ToInt32(config[Parameters.Port]);
@@ -73,6 +93,15 @@ namespace Server
         {
             return Convert.ToInt32(config[Parameters.GenerationCount]);
         }
-        
+
+        public double GetMutationChance()
+        {
+            return Convert.ToDouble(config[Parameters.MutationChance]);
+        }
+        public double GetMutationThreshold()
+        {
+            return Convert.ToDouble(config[Parameters.MutationThreshold]);
+        }
+
     }
 }

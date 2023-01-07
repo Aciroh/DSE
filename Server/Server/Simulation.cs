@@ -2,10 +2,25 @@ namespace Server;
 
 public class Simulation
 {
+    public double? CrowdingDistance
+    {
+        get => crowdingDistance;
+        set => crowdingDistance = value;
+    }
+
+    public int? FrontNumber
+    {
+        get => frontNumber;
+        set => frontNumber = value;
+    }
 
     public SimulationConfig Config => config;
 
     private List<String>? output;
+
+    private int? frontNumber;
+
+    private double? crowdingDistance;
 
     public List<string>? Output
     {

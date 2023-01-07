@@ -78,4 +78,23 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Server/BlackBoxHandler.cs</url>
+          <line>84</line>
+          <properties documentPath="F:\Repos\DSE\Server\Server\BlackBoxHandler.cs" initialLine="82" containingFunctionPresentation="method 'handleServerEvent'">
+            <startOffsets>
+              <option value="2619" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2685" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
 </project>

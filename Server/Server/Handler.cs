@@ -57,24 +57,34 @@ public class Handler
                     Console.WriteLine("Power: " + simulation.Output[1]);
                 }
             }
-            foreach (var simulation in simulations)
+            
+            foreach (List<Simulation> front in paretoFronts)
             {
-                Console.WriteLine("Simulation " + simulation.Config.ConfigName + " has output ipc " + simulation.Output[0] + " and power " + simulation.Output[1]);
+                crowdingDistanceSorter(front);
             }
             //DELETE SIMULATIONS WHEN NEEDED
             //NEW GENERATION!!!!
         }
         //Daca am configuratie generata, o trimit
+        // A NU SE MODIFICA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         for (var index = 0; index < simulations.Count; index++)
         {
             var simulation = simulations[index];
             if (simulation.Output == null)
             {
-                connection.sendToFirstAvailableClient(simulation.Config);
+                connection.sendToFirstAvailableClient(simulation);
                 return;
             }
         }
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // A NU SE MODIFICA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //Daca nu am configuratie generata, generez N configuratii (cu FileHandler verific)
+    }
+    
+    private void crowdingDistanceSorter(List<Simulation> front)
+    {
+        
     }
 
     private void attachOutputToSimulation(String simulationOutput)
@@ -151,6 +161,7 @@ public class Handler
                 if (output.dominationCount == 0)
                 {
                     Simulation simulationForThisOutput = findFirstSimulation(output.outputs);
+                    simulationForThisOutput.FrontNumber = paretoFrontSimulations.Count - 1;
                     paretoFrontSimulations.Last().Add(simulationForThisOutput);
                     allOutputs.Remove(output);
                     thisFrontOutput.Add(output);

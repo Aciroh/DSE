@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+
 namespace Server;
 
 public class BlackBoxHandler
@@ -5,27 +7,20 @@ public class BlackBoxHandler
     public List<Simulation> simulations = new List<Simulation>();
     public ConfigGenerator generator = new ConfigGenerator();
     public Config config;
+    private Random rnd = new Random();
+    private int generationNR = 0;
+    private int configNR = 0;
     public BlackBoxHandler()
     {
         config = new Config();
         for (int i = 0; i < config.GetGenerationCount(); i++)
         {
             simulations.Add(new Simulation(null, generator.getRandomConfig("Config-" + i)));
+            configNR++;
             Console.WriteLine("Handler ordered config " + i);
         }
 
-        Random rnd = new Random();
-        string delimiter = "##";
-        int configNR = 0;
-        for (int i = 0; i < 100; i++)
-        {
-            double ipc = rnd.NextDouble() * (3.5 - 0.5) + 0.5;
-            double power = rnd.NextDouble() * (100 - 10) + 100;
-            String output = "output" + delimiter + "Config-" + configNR + delimiter + ipc.ToString() + delimiter +
-                            power.ToString() + delimiter;
-            configNR++;
-            handleServerEvent(output);
-        }
+        triggerServerEvent(simulations[0]);
     }
     
     public void handleServerEvent(string o)
@@ -43,36 +38,58 @@ public class BlackBoxHandler
         if (simulations.Last().Output != null)
         {
             //DoPareto
-            List<double> ipcList = new List<double>();
-            List<double> powerList = new List<double>();
-            for (var index = 0; index < simulations.Count; index++)
+            List<List<Simulation>> paretoFronts = doPareto();
+            
+            //printSimulationsFromAllFronts(paretoFronts);
+
+            
+            for (var index = 0; index < paretoFronts.Count; index++)
             {
-                var simulation = simulations[index];
-                Console.WriteLine(index + " ipc=" + simulation.Output[0] + " power=" + simulation.Output[1]);
-                ipcList.Add(Convert.ToDouble(simulation.Output[0]));
-                powerList.Add(Convert.ToDouble(simulation.Output[1]));
+                List<Simulation> front = paretoFronts[index];
+                front = calculateAndSortByCrowdingDistance(front);
             }
-            double[][] outputArray = ipcList.Zip(powerList, (x, y) => new double[] { x, y }).ToArray();
-            List<List<Simulation>> paretoFronts = findParetoFronts(outputArray);
-            int i = 0;
-            foreach (List<Simulation> front in paretoFronts)
-            {
-                Console.WriteLine("Front " + i + ": ");
-                i++;
-                foreach (Simulation simulation in front)
-                {
-                    Console.WriteLine("Simulation with:");
-                    Console.WriteLine("IPC: " + simulation.Output[0]);
-                    Console.WriteLine("Power: " + simulation.Output[1]);
-                }
-            }
-            foreach (var simulation in simulations)
-            {
-                Console.WriteLine("Simulation " + simulation.Config.ConfigName + " has output ipc " + simulation.Output[0] + " and power " + simulation.Output[1]);
-            }
+            
+            printSortedSimulationsFromAllFronts(paretoFronts);
+
             //DELETE SIMULATIONS WHEN NEEDED
             //NEW GENERATION!!!!
+
+            List<Simulation> allSimulations = new List<Simulation>();
+            foreach (List<Simulation> front in paretoFronts)
+            {
+                foreach (Simulation simulation in front)
+                {
+                    allSimulations.Add(simulation);
+                }
+            }
+            
+            simulations = allSimulations;
+
+            if (generationNR > 0)
+            {
+                for(int index = 0; index<config.GetGenerationCount();index++)
+                {
+                    simulations.Remove(simulations.Last());
+                }
+            }
+
+            if (generationNR == 3)
+            {
+                foreach (Simulation simulation in simulations)
+                {
+                    Console.WriteLine("Surviving simulation: " + simulation.Config.ConfigName);
+                }
+                Console.WriteLine(simulations.Count);
+                return;
+            }
+            List<Simulation> childSimulations = getNewGeneration(simulations);
+            generationNR++;
+            foreach (var simulation in childSimulations)
+            {
+                simulations.Add(simulation);
+            }
         }
+
         //Daca am configuratie generata, o trimit
         for (var index = 0; index < simulations.Count; index++)
         {
@@ -80,12 +97,138 @@ public class BlackBoxHandler
             if (simulation.Output == null)
             {
                 Console.WriteLine("Sent config");
+                triggerServerEvent(simulation);
                 return;
             }
         }
         //Daca nu am configuratie generata, generez N configuratii (cu FileHandler verific)
     }
 
+    private void triggerServerEvent(Simulation simulation)
+    {
+        string delimiter = "##";
+        double ipc = rnd.NextDouble() * (3.5 - 0.5) + 0.5;
+        double power = rnd.NextDouble() * (100 - 10) + 100;
+        String output = "output" + delimiter + "Config-" + simulation.Config.ConfigName.Substring(7)
+                        + delimiter + ipc.ToString() + delimiter +
+                        power.ToString() + delimiter;
+        handleServerEvent(output);
+    }
+
+    private void printSimulationsFromAllFronts(List<List<Simulation>> paretoFronts)
+    {
+        for (var index = 0; index < paretoFronts.Count; index++)
+        {
+            var front = paretoFronts[index];
+            Console.WriteLine("Front " + index + ": ");
+            foreach (Simulation simulation in front)
+            {
+                Console.WriteLine("Simulation with:");
+                Console.WriteLine("IPC: " + simulation.Output[0]);
+                Console.WriteLine("Power: " + simulation.Output[1]);
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+    }
+
+    private void printSortedSimulationsFromAllFronts(List<List<Simulation>> paretoFrontsSorted)
+    {
+        for (var index = 0; index < paretoFrontsSorted.Count; index++)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("Sorted front:");
+            List<Simulation> front = paretoFrontsSorted[index];
+            foreach (var simulation in front)
+            {
+                Console.WriteLine("Sim " + simulation.Config.ConfigName);
+                Console.WriteLine("IPC " + simulation.Output[0]);
+                Console.WriteLine("Power " + simulation.Output[1]);
+                Console.WriteLine("Crowding distance " + simulation.CrowdingDistance);
+                Console.WriteLine("Front " + simulation.FrontNumber);
+            }
+        }
+    }
+
+    private List<List<Simulation>> doPareto()
+    {
+        List<double> ipcList = new List<double>();
+        List<double> powerList = new List<double>();
+        for (var index = 0; index < simulations.Count; index++)
+        {
+            var simulation = simulations[index];
+            Console.WriteLine(index + " ipc=" + simulation.Output[0] + " power=" + simulation.Output[1]);
+            ipcList.Add(Convert.ToDouble(simulation.Output[0]));
+            powerList.Add(Convert.ToDouble(simulation.Output[1]));
+        }
+        double[][] outputArray = ipcList.Zip(powerList, (x, y) => new double[] { x, y }).ToArray();
+        return findParetoFronts(outputArray);
+    }
+
+    private List<Simulation> getNewGeneration(List<Simulation> parentList)
+    {
+        List<Simulation> newList = new List<Simulation>();
+        for (int j = 0; j < config.GetGenerationCount(); j++)
+        {
+            newList.Add(new Simulation(null,
+                generator.getConfigFromParents(getRandomParent(parentList), getRandomParent(parentList),
+                    "Config-" + configNR)));
+            configNR++;
+        }
+
+        return newList;
+    }
+
+    private Simulation getRandomParent(List<Simulation> allSimulations)
+    {
+        Simulation parent1 = allSimulations[rnd.Next(allSimulations.Count)];
+        Simulation parent2 = allSimulations[rnd.Next(allSimulations.Count)];
+
+        if (parent1.FrontNumber > parent2.FrontNumber)
+        {
+            return parent1;
+        } else if (parent1.FrontNumber == parent2.FrontNumber)
+        {
+            if (parent1.CrowdingDistance > parent2.CrowdingDistance)
+            {
+                return parent1;
+            }
+        }
+        return parent2;
+    }
+    private List<Simulation> calculateAndSortByCrowdingDistance(List<Simulation> front)
+    {
+        int dimension = 2;
+        for (int i = 0; i < dimension; i++)
+        {
+            front.Sort((sim1, sim2) =>
+            {
+                return (Convert.ToDouble(sim1.Output[i]) < Convert.ToDouble(sim2.Output[i])) ? -1 : 1;
+            });
+            front[0].CrowdingDistance = double.PositiveInfinity;
+            front.Last().CrowdingDistance = double.PositiveInfinity;
+            for (int index = 1; index < front.Count-1; index++)
+            {
+                var simulation = front[index];
+                Simulation highNeighbor = front[index + 1];
+                Simulation lowNeighbor = front[index - 1];
+                simulation.CrowdingDistance = 0.0;
+                simulation.CrowdingDistance +=
+                    Math.Abs(Convert.ToDouble(simulation.Output[i]) - Convert.ToDouble(highNeighbor.Output[i]));
+                simulation.CrowdingDistance +=
+                    Math.Abs(Convert.ToDouble(simulation.Output[i]) - Convert.ToDouble(lowNeighbor.Output[i]));
+            }
+        }
+        front.Sort((sim1, sim2) =>
+        {
+            return (Convert.ToDouble(sim1.CrowdingDistance) < Convert.ToDouble(sim2.CrowdingDistance)) ? -1 : 1;
+        });
+        return front;
+    }
+    
     private void attachOutputToSimulation(String simulationOutput)
     {
         List<String> outputList = simulationOutput.Split("##").ToList();
@@ -99,9 +242,7 @@ public class BlackBoxHandler
             {
                 if (simulations[index].Config.ConfigName == name)
                 {
-                    Console.WriteLine(index + " Count " + simulations.Count);
                     simulations[index].Output = new List<string>();
-
                     simulations[index].Output.Add(ipc);
                     simulations[index].Output.Add(power);
                 }
@@ -160,6 +301,7 @@ public class BlackBoxHandler
                 if (output.dominationCount == 0)
                 {
                     Simulation simulationForThisOutput = findFirstSimulation(output.outputs);
+                    simulationForThisOutput.FrontNumber = paretoFrontSimulations.Count - 1;
                     paretoFrontSimulations.Last().Add(simulationForThisOutput);
                     allOutputs.Remove(output);
                     thisFrontOutput.Add(output);

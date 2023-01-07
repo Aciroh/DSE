@@ -242,7 +242,7 @@ namespace Server
             }
         }
     
-        public void sendToFirstAvailableClient(SimulationConfig config)
+        public void sendToFirstAvailableClient(Simulation simulation)
         {
             bool sent = false;
             Console.WriteLine("Sending config");
@@ -253,7 +253,7 @@ namespace Server
                     if (!tcpClientsConfigSent[i])
                     {
                         NetworkStream stream = tcpClients[i].GetStream();
-                        byte[] msg = convertSimulationConfigToByte(config);
+                        byte[] msg = convertSimulationConfigToByte(simulation.Config);
                         stream.Write(msg,0,msg.Length);
                         sent = true;
                     }
