@@ -3,36 +3,36 @@ Running configuration file C:\Users\Roberto\Desktop\Proiect Florea\DSE\Client\Cl
 <psatsim_results>
 <variation
 	configuration="Config-9" variation="1"
-	started="06 January 2023, 21:30:39" runtime="1.666">
+	started="07 January 2023, 17:07:12" runtime="1.487">
 	<general
-		cycles="35531"
+		cycles="69227"
 		instructions="103526"
 		fetches="103526"
-		ipc="2.913681"
-		energy="3.40859"
-		power="57.5598">
+		ipc="1.495457"
+		energy="7.75518"
+		power="67.2152">
 		<regfile
 			total="227995"
-			utilization_avg="6.41679"
-			capacitance="3.04519"
-			activity="20030.2"
-			energy="0.322667"
-			power="5.44877"
-			power_percent="9.46629" />
+			utilization_avg="3.29344"
+			capacitance="5.10847"
+			activity="19746.3"
+			energy="0.53362"
+			power="4.62496"
+			power_percent="6.88082" />
 		<resultbus
 			total="103526"
-			utilization_avg="2.91368"
-			capacitance="15.3379"
-			activity="9033.89"
-			energy="0.732988"
-			power="12.3777"
-			power_percent="21.5041" />
+			utilization_avg="1.49546"
+			capacitance="20.9793"
+			activity="10649.6"
+			energy="1.1819"
+			power="10.2437"
+			power_percent="15.2402" />
 		<clockbus
-			capacitance="3.4791"
-			activity="35531"
-			energy="0.653927"
-			power="11.0427"
-			power_percent="19.1847" />
+			capacitance="3.9082"
+			activity="69227"
+			energy="1.43123"
+			power="12.4046"
+			power_percent="18.4551" />
 	</general>
 </variation>
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -22,12 +23,15 @@ namespace Client
         public void loadXmlFile() {
             try
             {
+                while (xmlDocument.IsReadOnly)
+                {
+                }
                 xmlDocument.Load(path);
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 // DANGER do not uncomment for your safety :')
-                //Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message + " " + e.StackTrace);
                 loadXmlFile();
             }
             

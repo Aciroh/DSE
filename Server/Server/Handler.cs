@@ -144,19 +144,20 @@ public class Handler
 
         while (allOutputs.Count > 0)
         {
-            List<outputToSort> thisIterationOutputs = new List<outputToSort>();
-            foreach (outputToSort output in allOutputs)
+            List<outputToSort> thisFrontOutput = new List<outputToSort>();
+            paretoFrontSimulations.Add(new List<Simulation>());
+            foreach (outputToSort output in allOutputs.ToList())
             {
                 if (output.dominationCount == 0)
                 {
                     Simulation simulationForThisOutput = findFirstSimulation(output.outputs);
                     paretoFrontSimulations.Last().Add(simulationForThisOutput);
                     allOutputs.Remove(output);
-                    thisIterationOutputs.Add(output);
+                    thisFrontOutput.Add(output);
                 }
             }
 
-            foreach (outputToSort output in thisIterationOutputs)
+            foreach (outputToSort output in thisFrontOutput)
             {
                 foreach (outputToSort dominated in output.dominated)
                 {

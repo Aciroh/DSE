@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Repos\\DSE\\Server\\Server\\Server.csproj": {}
+    "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "F:\\Repos\\DSE\\Server\\Server\\Server.csproj": {
+    "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Repos\\DSE\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "F:\\Repos\\DSE\\Server\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\Aciroh\\.nuget\\packages\\",
-        "outputPath": "F:\\Repos\\DSE\\Server\\Server\\obj\\",
+        "projectPath": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\Roberto\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Roberto\\Desktop\\Proiect Florea\\DSE\\Server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Aciroh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Roberto\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
