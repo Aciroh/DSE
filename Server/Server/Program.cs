@@ -5,10 +5,8 @@ internal class Program
     private static void Main(string[] args)
     {
 
-        Handler handler = new Handler();
+        BlackBoxHandler handler = new BlackBoxHandler();
 
         //con.sendToFirstAvailableClient(generator.getRandomConfig("Config1"));
     }
-
-    
 }
