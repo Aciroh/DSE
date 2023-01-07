@@ -44,7 +44,19 @@ public class Handler
                 powerList.Add(Convert.ToDouble(simulation.Output[1]));
             }
             double[][] outputArray = ipcList.Zip(powerList, (x, y) => new double[] { x, y }).ToArray();
-            simulations = findParetoFront(outputArray);
+            List<List<Simulation>> paretoFronts = findParetoFronts(outputArray);
+            int i = 0;
+            foreach (List<Simulation> front in paretoFronts)
+            {
+                Console.WriteLine("Front " + i + ": ");
+                i++;
+                foreach (Simulation simulation in front)
+                {
+                    Console.WriteLine("Simulation with:");
+                    Console.WriteLine("IPC: " + simulation.Output[0]);
+                    Console.WriteLine("Power: " + simulation.Output[1]);
+                }
+            }
             foreach (var simulation in simulations)
             {
                 Console.WriteLine("Simulation " + simulation.Config.ConfigName + " has output ipc " + simulation.Output[0] + " and power " + simulation.Output[1]);
@@ -88,39 +100,75 @@ public class Handler
         }
     }
 
-    private List<Simulation> findParetoFront(double[][] outputs)
+    internal class outputToSort
+    {
+        internal double[] outputs;
+        internal int dominationCount;
+        internal List<outputToSort> dominated;
+        internal outputToSort(double[] outputs, int dominationCount, List<outputToSort> dominated)
+        {
+            this.dominated = dominated;
+            this.dominationCount = dominationCount;
+            this.outputs = outputs;
+        }
+    }
+    
+    private List<List<Simulation>> findParetoFronts(double[][] outputs)
     {
         Array.Sort(outputs, (a, b) => b[0].CompareTo(a[0]));
         
-        List<Simulation> paretoFrontSimulations = new List<Simulation>();
-        
-        for (int index = 0; index < outputs.Length; index++)
+        List<List<Simulation>> paretoFrontSimulations = new List<List<Simulation>>();
+
+        List<outputToSort> allOutputs = new List<outputToSort>();
+        foreach (var output in outputs)
         {
-            double[] output = outputs[index];
-            bool isDominated = false;
-            
-            for (int i = 0; i < paretoFrontSimulations.Count; i++)
+            allOutputs.Add(new outputToSort(output, 0, new List<outputToSort>()));
+        }
+
+        
+        // Check what outputs are dominated
+        foreach (outputToSort output in allOutputs)
+        {
+            foreach (outputToSort otherOutput in allOutputs)
             {
-                // If the point is dominated, set the flag to true and break out of the loop
-                if (output[0] >= Convert.ToDouble(paretoFrontSimulations[i].Output[0]) &&
-                    output[1] <= Convert.ToDouble(paretoFrontSimulations[i].Output[1]))
+                if ((output.outputs[0] >= otherOutput.outputs[0] && 
+                     output.outputs[1] <= otherOutput.outputs[1]) && 
+                    (output.outputs[0] > otherOutput.outputs[0] || 
+                     output.outputs[1] < otherOutput.outputs[1]))
                 {
-                    isDominated = true;
-                    break;
+                    output.dominated.Add(otherOutput);
+                    otherOutput.dominationCount++;
+                }
+            }
+        }
+
+        while (allOutputs.Count > 0)
+        {
+            List<outputToSort> thisIterationOutputs = new List<outputToSort>();
+            foreach (outputToSort output in allOutputs)
+            {
+                if (output.dominationCount == 0)
+                {
+                    Simulation simulationForThisOutput = findFirstSimulation(output.outputs);
+                    paretoFrontSimulations.Last().Add(simulationForThisOutput);
+                    allOutputs.Remove(output);
+                    thisIterationOutputs.Add(output);
                 }
             }
 
-            if (!isDominated)
+            foreach (outputToSort output in thisIterationOutputs)
             {
-                Simulation simulation = findFirstSimulation(output);
-                if (simulation != null) paretoFrontSimulations.Add(simulation);
-                paretoFrontSimulations.RemoveAll(x => Convert.ToDouble(x.Output[0]) <= output[0] && Convert.ToDouble(x.Output[1]) >= output[1]);
+                foreach (outputToSort dominated in output.dominated)
+                {
+                    dominated.dominationCount--;
+                }
             }
         }
+        
         return paretoFrontSimulations;
     }
 
-    private Simulation? findFirstSimulation(double[] output)
+    private Simulation findFirstSimulation(double[] output)
     {
         for (var index = 0; index < simulations.Count; index++)
         {
@@ -130,6 +178,6 @@ public class Handler
                 return simulation;
             }
         }
-        return null;
+        throw new Exception();
     }
 }
