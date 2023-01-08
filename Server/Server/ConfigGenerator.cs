@@ -30,6 +30,7 @@ public class ConfigGenerator
         return config;
     }
 
+    //Crossover 
     public SimulationConfig getConfigFromParents(Simulation parent1, Simulation parent2, String configName)
     {
         // Following line generates a bool
