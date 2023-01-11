@@ -6,24 +6,50 @@ public class Handler
     public ConfigGenerator generator = new ConfigGenerator();
     public Connection connection;
     public Config config;
+    public ExcelManager excelManager;
     private Random rnd = new Random();
     private int generationNR = 0;
     private int configNR = 0;
     public Handler()
     {
         config = new Config();
+        excelManager = new ExcelManager();
         connection = new Connection(config.GetPort(), config.GetPort()+1);
         connection.OutputReceived += handleServerEvent;
         connection.ConnectionEstablished += handleServerEvent;
 
-        //Generare configuratii random
-        for (int i = 0; i < config.GetGenerationCount(); i++) //modificat getGenerationCount -> nu e nr de generatii ci nr de indivizii din populatia initiala
-        {
-            simulations.Add(new Simulation(null, generator.getRandomConfig("Config-" + i)));
-            configNR++;
-            Console.WriteLine("Handler ordered config " + i);
-        }
+        getConfigs();
     }
+
+    private void getConfigs()
+    {
+
+        if (checkIfExcelExists())
+        {
+            
+        }
+        else
+        {
+            //Generare configuratii random
+            for (int i = 0; i < config.GetGenerationCount(); i++) //modificat getGenerationCount -> nu e nr de generatii ci nr de indivizii din populatia initiala
+            {
+                Simulation simulation = new Simulation(null, generator.getRandomConfig("Config-" + i));
+                excelManager.AddConfiguration(simulation);
+                simulations.Add(simulation);
+                configNR++;
+                Console.WriteLine("Handler ordered config " + i);
+            }
+
+        }
+        
+    }
+
+    private Boolean checkIfExcelExists()
+    {
+        return false;
+    }
+
+
     
     public void handleServerEvent(object o, EventArgs e)
     {
@@ -243,6 +269,7 @@ public class Handler
 
                     simulations[index].Output.Add(ipc);
                     simulations[index].Output.Add(power);
+                    excelManager.AddConfiguration(simulations[index]);
                 }
             }
         }

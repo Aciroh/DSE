@@ -1,7 +1,7 @@
 <psatsim>
-  <config name="Config-3">
-    <general superscalar="15" rename="215" reorder="211" rsb_architecture="hybrid" rs_per_rsb="5" speculative="True" speculation_accuracy="0.22364843" separate_dispatch="False" seed="0" trace="compress.tra" output="output.xml" vdd="2.3" frequency="600" />
-    <execution architecture="standard" integer="7" floating="8" branch="8" memory="7" />
+  <config name="Config-39">
+    <general superscalar="6" rename="35" reorder="344" rsb_architecture="centralized" rs_per_rsb="4" speculative="False" speculation_accuracy="0.5369444" separate_dispatch="False" seed="0" trace="toast.tra" output="output.xml" vdd="2.3" frequency="600" />
+    <execution architecture="standard" integer="6" floating="8" branch="5" memory="8" />
     <!-- This is the structure for the simple system architecture
 	
 		<execution
@@ -129,10 +129,10 @@
 			# This specifies the parameters for the system memory
 			<system latency="20" />
 		</memory> -->
-    <memory architecture="l2">
-      <l1_code hitrate="0.7072361" latency="1" />
-      <l1_data hitrate="0.3069988" latency="1" />
-      <l2 hitrate="0.13617861" latency="3" />
+    <memory architecture="system">
+      <l1_code hitrate="0.07748854" latency="1" />
+      <l1_data hitrate="0.89332014" latency="1" />
+      <l2 hitrate="0.32767385" latency="3" />
       <system latency="20" />
     </memory>
   </config>

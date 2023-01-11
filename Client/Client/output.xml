@@ -1,0 +1,39 @@
+<!-- PSATSim v2.1 by Clint W. Smullen, IV
+Running configuration file H:\Repos\DSE\Client\Client/default_cfg.xml with 1 variations -->
+<psatsim_results>
+<variation
+	configuration="Config-39" variation="1"
+	started="11 January 2023, 14:07:00" runtime="0.825">
+	<general
+		cycles="59629"
+		instructions="103526"
+		fetches="103526"
+		ipc="1.736169"
+		energy="3.66362"
+		power="36.8642">
+		<regfile
+			total="227995"
+			utilization_avg="3.82356"
+			capacitance="0.91095"
+			activity="34714.1"
+			energy="0.167284"
+			power="1.68325"
+			power_percent="4.56609" />
+		<resultbus
+			total="103526"
+			utilization_avg="1.73617"
+			capacitance="10.8485"
+			activity="9413.77"
+			energy="0.540241"
+			power="5.43602"
+			power_percent="14.7461" />
+		<clockbus
+			capacitance="2.65559"
+			activity="59629"
+			energy="0.837672"
+			power="8.42884"
+			power_percent="22.8646" />
+	</general>
+</variation>
+
+</psatsim_results>
